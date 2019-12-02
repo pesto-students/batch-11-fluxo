@@ -1,0 +1,19 @@
+{
+  "name": "fluxo_root",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "yarn workspace client start",
+    "server": "yarn workspace server start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
