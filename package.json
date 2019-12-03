@@ -9,7 +9,9 @@
     "server"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "yarn test-server && yarn test-client",
+    "test-server" : "yarn workspace server test",
+    "test-client" : "yarn workspace client test",
     "client": "yarn workspace client start",
     "server": "yarn workspace server start"
   },
