@@ -13,9 +13,33 @@
     "test-server" : "yarn workspace server test",
     "test-client" : "yarn workspace client test",
     "client": "yarn workspace client start",
-    "server": "yarn workspace server start"
+    "server": "yarn workspace server start",
+    "client:lint": "yarn workspace client lint",
+    "server:lint": "yarn workspace server lint"
   },
   "keywords": [],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "[eslint]",
+      "git add"
+    ]
+  }
 }
