@@ -4,7 +4,8 @@
   "description": "This respository consists all server side code",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js"
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "jest __tests__"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
     "@babel/core": "^7.7.4",
     "@babel/node": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
+    "jest": "^24.9.0",
     "nodemon": "^2.0.1"
   }
 }
