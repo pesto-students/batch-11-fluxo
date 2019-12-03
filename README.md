@@ -1,5 +1,7 @@
 
 ## batch-11-fluxo
+
+
 	
 ### Project Specs
 - [Notion](https://www.notion.so/pesto/Batch-11-project-specs-40cef8d675c04ac0b72a7c2995073781)
@@ -23,4 +25,3 @@
 - GIFs/ video for frontend prs.
 - Review each other PRs.
 - don’t commit in someone else pr
-  
