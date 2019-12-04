@@ -1,17 +1,19 @@
 import mongoose from 'mongoose';
 import app from './app';
-import env from './env';
+import { MONGODB_URI, PORT } from './envVariable';
 
 mongoose
-  .connect(env.dbUri, {
+  .connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
   .then(() => {
     console.log('Mongo DB Connected');
-    app.listen(env.port, () => {
-      console.log(`Server is listening at port ${env.port}`);
+    app.listen(PORT, () => {
+      console.log(`Server is listening at port ${PORT}`);
     });
   })
   .catch((err) => console.log(err));
+
+export default app;
