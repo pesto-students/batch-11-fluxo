@@ -1,12 +1,12 @@
 import axios from 'axios';
-import env from '../../env';
+import { slackClientId, slackClientSecret, baseUri } from '../../envVariable';
 import config from './config';
 import ThirdPartyApp from '../models/ThirdPartyApp';
 import tpEventEmitter, { generateActionUpdateEvent, generateAppAddedEvent, generateAppUpdatedEvent } from '../event';
 
-const getAuthUrl = (code) => `${config.api}/api/oauth.access?client_id=${env.slackClientId}&client_secret=${env.slackClientSecret}&code=${code}&redirect_uri=${encodeURIComponent(`${env.baseUri}/tp/slack/auth/redirect`)}`;
+const getAuthUrl = (code) => `${config.api}/api/oauth.access?client_id=${slackClientId}&client_secret=${slackClientSecret}&code=${code}&redirect_uri=${encodeURIComponent(`${baseUri}/tp/slack/auth/redirect`)}`;
 
-const getIntegUrl = (state) => `${config.api}/oauth/authorize?scope=bot,channels:history,channels:read,chat:write:bot&client_id=${env.slackClientId}&redirect_uri=${encodeURIComponent(`${env.baseUri}/tp/slack/auth/redirect`)}&state=${state}`;
+const getIntegUrl = (state) => `${config.api}/oauth/authorize?scope=bot,channels:history,channels:read,chat:write:bot&client_id=${slackClientId}&redirect_uri=${encodeURIComponent(`${baseUri}/tp/slack/auth/redirect`)}&state=${state}`;
 
 const generateAuthToken = async (code) => {
   const { data } = await axios.get(getAuthUrl(code));
