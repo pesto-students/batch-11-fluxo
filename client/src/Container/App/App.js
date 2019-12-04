@@ -1,10 +1,11 @@
 import React from 'react';
 import style from './App.module.scss';
+import AppHeader from '../../Component/AppHeader/AppHeader';
 
 const App = () => {
   return (
     <div className={style.App}>
-      <h1>Coming soon</h1>
+      <AppHeader />
     </div>
   );
 };
