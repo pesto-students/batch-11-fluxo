@@ -2,14 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './IndexStyle/index.module.scss';
 import App from './Container/App/App';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
+import { ThemeProvider, theme } from './MaterialUI/Import/Import';
 
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: ['Montserrat', 'sans-serif'].join(','),
-  },
-});
 const app = (
   <ThemeProvider theme={theme}>
     <App />

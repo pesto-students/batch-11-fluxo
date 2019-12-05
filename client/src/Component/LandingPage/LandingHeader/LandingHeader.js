@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const AppHeader = () => {
+const LandingHeader = () => {
   const classes = useStyles();
 
   return (
@@ -28,11 +28,10 @@ const AppHeader = () => {
             Fluxo
           </Typography>
           <Button color='inherit'>Login</Button>
-          <Button color='inherit'>Sign Up</Button>
         </Toolbar>
       </AppBar>
     </div>
   );
 };
 
-export default AppHeader;
+export default LandingHeader;
