@@ -4,15 +4,25 @@
   "description": "This respository consists all server side code",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "nodemon --exec babel-node src/app/index.js",
     "test": "jest __tests__",
     "lint": "eslint --ext .js . --fix"
+
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.13",
+    "mongoose-auto-increment": "^5.0.1",
+    "passport-local": "^1.0.0",
+    "validator": "^12.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
