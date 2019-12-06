@@ -4,8 +4,7 @@ const SignUp = () => {
   return (
     <div>
       <form action="/" style={{ border: '1px solid #ccc',margin: '400px' }}>
-        <h1>Sign Up</h1>
-        <p>Please fill in this form to create an account.</p>
+        <h1>Login</h1>
 
         <label for="email" >
           <b>Email:</b>
@@ -22,19 +21,9 @@ const SignUp = () => {
           />
         </label><br/>
 
-        <label for="psw-repeat">
-          <b>Confirm Password:</b>
-        </label>
-        <input
-          type="password"
-          placeholder="Repeat Password"
-          name="psw-repeat"
-          required
-        /><br/>
-
         <div class="clearfix">
           <button type="submit" class="signupbtn">
-            Sign Up
+            Login
           </button>
         </div>
       </form>
