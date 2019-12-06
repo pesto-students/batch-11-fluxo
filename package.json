@@ -15,7 +15,8 @@
     "client": "yarn workspace client start",
     "server": "yarn workspace server start",
     "client:lint": "yarn workspace client lint",
-    "server:lint": "yarn workspace server lint"
+    "server:lint": "yarn workspace server lint",
+    "start": "yarn client && yarn server"
   },
   "keywords": [],
   "author": "",
