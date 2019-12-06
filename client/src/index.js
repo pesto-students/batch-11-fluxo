@@ -11,11 +11,14 @@ const theme = createMuiTheme({
   },
 });
 import { ThemeProvider, theme } from './MaterialUI/Import/Import';
+import { BrowserRouter } from 'react-router-dom';
 
 const app = (
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>
+  <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </BrowserRouter>
 );
 
 ReactDOM.render(app, document.getElementById('root'));
