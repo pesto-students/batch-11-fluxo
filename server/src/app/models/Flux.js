@@ -5,12 +5,9 @@ const FluxSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  email: {
+  userId: {
     type: String,
     unique: true,
-    required: true,
-    trim: true,
-    lowercase: true,
   },
   eventApp: {
     type: String,
@@ -33,11 +30,8 @@ const FluxSchema = mongoose.Schema({
   isEnable: {
     type: Boolean,
   },
-  creationDate: {
-    timestamps: true,
-  },
 });
 
-const createFLux = mongoose.model('createFLux', FluxSchema);
+const Flux = mongoose.model('Flux', FluxSchema, 'flux');
 
-module.exports = createFlux;
+module.exports = Flux;

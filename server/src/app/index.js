@@ -1,9 +1,9 @@
 import express from 'express';
-import index from './routes/index';
-import users from './routes/users';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
+import index from './routes/index';
+import users from './routes/users';
 
 dotenv.config({ path: '../.env' });
 

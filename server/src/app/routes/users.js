@@ -24,8 +24,11 @@ router.post('/register', async (req, res) => {
 
     await newUser.save().then(console.log('User Inserted'));
 
+    const id = newUser._id;
+
     const token = await jwt.sign(
         {
+          id,
           email
         },
         process.env.JWT_KEY,
@@ -33,6 +36,8 @@ router.post('/register', async (req, res) => {
           expiresIn: '24h'
         }
       );
+
+      console.log(token);
 
     res.send({error : null, token: token});
   } catch (err) {
@@ -53,8 +58,10 @@ router.post('/login', async (req, res) => {
   const comparePassword = await bcrypt.compare(password, user.password);
 
   if (comparePassword) {
+    const id = user._id;
     const token = await jwt.sign(
         {
+          id,
           email
         },
         process.env.JWT_KEY,

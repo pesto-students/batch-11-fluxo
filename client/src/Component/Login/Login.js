@@ -43,9 +43,9 @@ class Login extends Component {
     return (
       <div>
         <form style={{ border: '1px solid #ccc',margin: '400px' }}>
-          <h1>Login</h1>
+          <h1 style={{textAlign: "center"}}>Login</h1>
   
-          <label htmlFor="email" >
+          <label htmlFor="email" style={{textAlign: "center"}}>
             <b>Email:</b>
             <input type="text" placeholder="Enter Email" name="email" required onChange= {this.emailChange} />
           </label><br/>

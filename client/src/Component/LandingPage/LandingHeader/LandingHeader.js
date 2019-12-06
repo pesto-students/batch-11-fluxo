@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LandingHeader = () => {
+const LandingHeader = (props) => {
   const classes = useStyles();
 
   return (
@@ -27,7 +27,7 @@ const LandingHeader = () => {
           <Typography variant='h6' className={classes.title}>
             Fluxo
           </Typography>
-          <Button color='inherit'>Login</Button>
+          <Button color='inherit'>{props.buttonText}</Button>
         </Toolbar>
       </AppBar>
     </div>

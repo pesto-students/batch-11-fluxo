@@ -5,7 +5,7 @@ import Footer from '../CommonUI/Footer/Footer';
 const LandingPage = () => {
   return (
     <Fragment>
-      <LandingHeader />
+      <LandingHeader buttonText= 'Login'/>
       <LandingBody />
       <Footer />
     </Fragment>
