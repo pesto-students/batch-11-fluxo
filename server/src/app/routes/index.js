@@ -7,7 +7,8 @@ const router = express.Router();
 router.get('/', (req, res) => res.send('Welcome to Authentication'));
 
 router.get('/api/dashboard', ensureAuthenticated, (req, res) => {
-  res.send();
+  res.send(req.body);
+  console.log(req.body);
 });
 
 router.get('/api/myflux', ensureAuthenticated, async (req, res) => {

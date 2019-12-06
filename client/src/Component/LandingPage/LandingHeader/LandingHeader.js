@@ -4,7 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
@@ -19,7 +20,13 @@ const useStyles = makeStyles(() => ({
 
 const LandingHeader = (props) => {
   const classes = useStyles();
-
+  const loginButton = () => {
+    props.history.push('/login');
+  };
+  const myfluxHandler = () => {
+    props.history.push('/flux');
+  };
+  const button = props.isAuth ? myfluxHandler : loginButton;
   return (
     <div className={classes.root}>
       <AppBar position='static' className={classes.appHeader}>
@@ -27,11 +34,18 @@ const LandingHeader = (props) => {
           <Typography variant='h6' className={classes.title}>
             Fluxo
           </Typography>
-          <Button color='inherit'>{props.buttonText}</Button>
+          <Button onClick={button} color='inherit'>
+            {props.isAuth ? 'My Flux' : 'Login'}
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
   );
 };
 
-export default LandingHeader;
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.isAuthenticated,
+  };
+};
+export default connect(mapStateToProps)(withRouter(LandingHeader));
