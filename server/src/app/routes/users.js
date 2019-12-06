@@ -6,7 +6,7 @@ router.post('/register', async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user) {
-    res.send('User is already registered');
+    res.send({err:'User is already registered',tokn: null});
     return;
   }
 
@@ -22,8 +22,6 @@ router.post('/register', async (req, res) => {
 
     newUser.password = hash;
 
-    console.log(newUser);
-
     await newUser.save().then(console.log('User Inserted'));
 
     const token = await jwt.sign(
@@ -36,16 +34,15 @@ router.post('/register', async (req, res) => {
         }
       );
 
-    res.send({token});
+    res.send({error : null, token: token});
   } catch (err) {
-    res.send(err);
+    res.send({error: err, token: null});
   }
 });
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  console.log(req.body);
   const user = await User.findOne({ email });
 
   if (!user) {
@@ -66,9 +63,9 @@ router.post('/login', async (req, res) => {
         }
       );
 
-    res.send({token});
+    res.send({error: null, token: token });
   } else {
-    res.send('Password is incorrect, Please Try Again!');
+    res.send({err: 'Password is incorrect, Please Try Again!', token: null });
   }
 });
 

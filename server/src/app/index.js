@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   .then(() => console.log('Mongo DB Connected'))
   .catch((err) => console.log(err));
 
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -39,5 +39,6 @@ app.use('/', index);
 app.use('/users', users);
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server is listening at port ${port}`);
 });
