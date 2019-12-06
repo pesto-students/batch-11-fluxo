@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-const UserSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema(
+  {
     name: {
       type: String,
       required: true,
@@ -21,12 +22,14 @@ const UserSchema = mongoose.Schema({
       required: true,
       validate(value) {
         // validation here
-      }
-    }
-  }, {
-    timestamps: true
-  });
+      },
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
-  const User = mongoose.model('User',UserSchema);
+const User = mongoose.model('User', UserSchema);
 
-  module.exports = User;
+module.exports = User;

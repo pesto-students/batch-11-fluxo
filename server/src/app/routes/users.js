@@ -14,31 +14,26 @@ router.post('/register', async (req, res) => {
     const newUser = new User({
       name,
       email,
-      password
+      password,
     });
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(newUser.password, salt);
 
     newUser.password = hash;
-
-    console.log(newUser);
-
     await newUser.save().then(console.log('User Inserted'));
-
     const token = await jwt.sign(
-        {
-          email
-        },
-        process.env.JWT_KEY,
-        {
-          expiresIn: '24h'
-        }
-      );
-
-    res.send({token});
+      {
+        email,
+      },
+      process.env.JWT_KEY,
+      {
+        expiresIn: '24h',
+      },
+    );
+    res.send({ error: null, token });
   } catch (err) {
-    res.send(err);
+    res.send({ error: err, token: null });
   }
 });
 
@@ -57,16 +52,16 @@ router.post('/login', async (req, res) => {
 
   if (comparePassword) {
     const token = await jwt.sign(
-        {
-          email
-        },
-        process.env.JWT_KEY,
-        {
-          expiresIn: '24h'
-        }
-      );
+      {
+        email,
+      },
+      process.env.JWT_KEY,
+      {
+        expiresIn: '24h',
+      },
+    );
 
-    res.send({token});
+    res.send({ token });
   } else {
     res.send('Password is incorrect, Please Try Again!');
   }
