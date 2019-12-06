@@ -1,0 +1,20 @@
+.Footer {
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  width: 100%;
+  bottom: 0vh;
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  p {
+    padding: 5px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .Footer {
+    position: static;
+    width: 100vw;
+    height: auto;
+  }
+}

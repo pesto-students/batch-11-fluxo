@@ -10,6 +10,8 @@ const theme = createMuiTheme({
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
   },
 });
+import { ThemeProvider, theme } from './MaterialUI/Import/Import';
+
 const app = (
   <ThemeProvider theme={theme}>
     <App />
