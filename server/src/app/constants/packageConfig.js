@@ -5,7 +5,7 @@ import User from '../models/User';
 
 const router = express.Router();
 
-export default {
+module.exports = {
   express,
   User,
   bcrypt,
