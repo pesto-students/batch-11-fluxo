@@ -1,43 +1,53 @@
 import mongoose from 'mongoose';
 
+const { Schema } = mongoose;
+
 const FluxSchema = mongoose.Schema({
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-      required: true,
-      trim: true,
-      lowercase: true
-    },
-    eventApp: {
-        type: String
-    },
-    actionApp: {
-        type: String
-    },
-    eventName: {
-        type: String
-    },
-    actionName: {
-        type: String
-    },
-    eventInputs: {
-        type: Object
-    },
-    actionInputs: {
-        type: Object
-    },
-    isEnable: {
-        type: Boolean
-    },
-    creationDate: {
-    timestamps: true
-  }
+  name: {
+    type: String,
+    required: true,
+  },
+  userId: Schema.Types.ObjectId,
+  eventApp: {
+    type: String,
+    required: true,
+    lowercase: true,
+  },
+  actionApp: {
+    type: String,
+    required: true,
+    lowercase: true,
+  },
+  eventName: {
+    type: String,
+    required: true,
+    lowercase: true,
+  },
+  actionName: {
+    type: String,
+    required: true,
+    lowercase: true,
+  },
+  eventAppId: Schema.Types.ObjectId,
+  actionAppId: Schema.Types.ObjectId,
+  eventInputs: {
+    type: Map,
+    required: true,
+  },
+  actionInputs: {
+    type: Map,
+    required: true,
+  },
+  isEnable: {
+    type: Boolean,
+    default: true,
+  },
+  creationDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-  const createFLux = mongoose.model('createFLux',FluxSchema);
+const Flux = mongoose.model('Flux', FluxSchema);
 
-  module.exports = createFlux;
+export default Flux;

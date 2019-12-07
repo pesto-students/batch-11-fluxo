@@ -26,9 +26,12 @@ router.post('/register', async (req, res) => {
 
     await newUser.save().then(console.log('User Inserted'));
 
+    id = newUser._id;
+
     const token = await jwt.sign(
         {
-          email
+        id,
+        email,
         },
         process.env.JWT_KEY,
         {
@@ -36,6 +39,7 @@ router.post('/register', async (req, res) => {
         }
       );
 
+    console.log(token);
     res.send({token});
   } catch (err) {
     res.send(err);
@@ -57,15 +61,16 @@ router.post('/login', async (req, res) => {
 
   if (comparePassword) {
     const token = await jwt.sign(
-        {
-          email
+      {
+          id: user._id,
+          email,
         },
         process.env.JWT_KEY,
         {
           expiresIn: '24h'
         }
       );
-
+    console.log(token);
     res.send({token});
   } else {
     res.send('Password is incorrect, Please Try Again!');

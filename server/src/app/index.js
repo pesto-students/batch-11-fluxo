@@ -4,9 +4,13 @@ import users from './routes/users';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import thirdPartyRouter from '../thirdparty/routes/thirdPartyRouter';
+import IntegrationService from './service/IntegrationService';
+import fluxRouter from './routes/flux';
+import integratedAppsRouter from './routes/integratedAppsRouter';
+import ensureAuthenticated from './middlewares/auth';
 
 dotenv.config({ path: '../.env' });
-
 
 const port = process.env.PORT || 5000;
 
@@ -22,9 +26,12 @@ mongoose.connect(process.env.MONGODB_URI, {
   .then(() => console.log('Mongo DB Connected'))
   .catch((err) => console.log(err));
 
-app.use(bodyParser.urlencoded({ extended: true}));
+IntegrationService.initialize();
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.set('view engine', 'ejs');
 
+console.log(process.env.SLACK_CLIENT_ID);
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -37,6 +44,9 @@ app.use((req, res, next) => {
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/flux', ensureAuthenticated, fluxRouter);
+app.use('/apps', ensureAuthenticated, integratedAppsRouter);
+app.use('/tp', thirdPartyRouter);
 
 app.listen(port, () => {
   console.log(`Server is listening at port ${port}`);
