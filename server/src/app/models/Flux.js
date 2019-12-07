@@ -7,7 +7,6 @@ const FluxSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-<<<<<<< HEAD
   userId: Schema.Types.ObjectId,
   eventApp: {
     type: String,
@@ -52,35 +51,3 @@ const FluxSchema = mongoose.Schema({
 const Flux = mongoose.model('Flux', FluxSchema);
 
 export default Flux;
-=======
-  userId: {
-    type: String,
-    unique: true,
-  },
-  eventApp: {
-    type: String,
-  },
-  actionApp: {
-    type: String,
-  },
-  eventName: {
-    type: String,
-  },
-  actionName: {
-    type: String,
-  },
-  eventInputs: {
-    type: Object,
-  },
-  actionInputs: {
-    type: Object,
-  },
-  isEnable: {
-    type: Boolean,
-  },
-});
-
-const Flux = mongoose.model('Flux', FluxSchema, 'flux');
-
-module.exports = Flux;
->>>>>>> 22990b036e272b2a2733f7698b4a2338268c2395
