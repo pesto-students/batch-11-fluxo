@@ -3,7 +3,7 @@ import { Button } from '../../Import/Import';
 
 const MyButton = (props) => {
   return (
-    <div>
+    <div onClick = {props.signUpButton}>
       <Button variant='contained' color={props.buttonColor}>
         {props.buttonText}
       </Button>

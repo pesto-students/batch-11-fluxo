@@ -1,0 +1,25 @@
+.Dash {
+  width: 50%;
+  margin: auto;
+  h2 {
+    text-align: center;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    h3,
+    select,
+    label,
+    hr {
+      margin: 3px;
+    }
+    .Button {
+      display: flex;
+      justify-content: center;
+      button {
+        margin: 5px;
+      }
+    }
+  }
+}

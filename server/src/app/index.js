@@ -1,14 +1,14 @@
 import express from 'express';
-import index from './routes/index';
-import users from './routes/users';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
 import thirdPartyRouter from '../thirdparty/routes/thirdPartyRouter';
 import IntegrationService from './service/IntegrationService';
 import fluxRouter from './routes/flux';
 import integratedAppsRouter from './routes/integratedAppsRouter';
 import ensureAuthenticated from './middlewares/auth';
+import index from './routes/index';
+import users from './routes/users';
 
 dotenv.config({ path: '../.env' });
 
@@ -18,11 +18,12 @@ const app = express();
 
 // DB Connection
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-})
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => console.log('Mongo DB Connected'))
   .catch((err) => console.log(err));
 
@@ -49,5 +50,6 @@ app.use('/apps', ensureAuthenticated, integratedAppsRouter);
 app.use('/tp', thirdPartyRouter);
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server is listening at port ${port}`);
 });

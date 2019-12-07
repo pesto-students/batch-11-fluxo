@@ -1,4 +1,6 @@
-import { User, bcrypt, jwt, router } from '../constants/packageConfig';
+import {
+ User, bcrypt, jwt, router 
+} from '../constants/packageConfig';
 
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
@@ -6,7 +8,7 @@ router.post('/register', async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user) {
-    res.send('User is already registered');
+    res.send({ err: 'User is already registered', tokn: null });
     return;
   }
 
@@ -14,7 +16,7 @@ router.post('/register', async (req, res) => {
     const newUser = new User({
       name,
       email,
-      password
+      password,
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -22,34 +24,32 @@ router.post('/register', async (req, res) => {
 
     newUser.password = hash;
 
-    console.log(newUser);
-
     await newUser.save().then(console.log('User Inserted'));
 
-    id = newUser._id;
+    const id = newUser._id;
 
     const token = await jwt.sign(
-        {
+      {
         id,
         email,
-        },
-        process.env.JWT_KEY,
-        {
-          expiresIn: '24h'
-        }
-      );
+      },
+      process.env.JWT_KEY,
+      {
+        expiresIn: '24h',
+      },
+    );
 
     console.log(token);
-    res.send({token});
+
+    res.send({ error: null, token });
   } catch (err) {
-    res.send(err);
+    res.send({ error: err, token: null });
   }
 });
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  console.log(req.body);
   const user = await User.findOne({ email });
 
   if (!user) {
@@ -62,18 +62,18 @@ router.post('/login', async (req, res) => {
   if (comparePassword) {
     const token = await jwt.sign(
       {
-          id: user._id,
-          email,
-        },
-        process.env.JWT_KEY,
-        {
-          expiresIn: '24h'
-        }
-      );
-    console.log(token);
-    res.send({token});
+        id: user._id,
+        email,
+      },
+      process.env.JWT_KEY,
+      {
+        expiresIn: '24h',
+      },
+    );
+
+    res.send({ error: null, token });
   } else {
-    res.send('Password is incorrect, Please Try Again!');
+    res.send({ err: 'Password is incorrect, Please Try Again!', token: null });
   }
 });
 

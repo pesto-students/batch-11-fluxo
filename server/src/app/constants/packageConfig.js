@@ -1,14 +1,14 @@
-import express from "express";
-import User from "../models/User";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../models/User';
 
 const router = express.Router();
 
-module.exports = {
-    express,
-    User,
-    bcrypt,
-    jwt,
-    router
-}
+export default {
+  express,
+  User,
+  bcrypt,
+  jwt,
+  router,
+};
