@@ -1,7 +1,10 @@
-@import './normalize.module.scss';
-$primary-color: #5a3796;
+html {
+  width: 100vw;
+}
 
 body {
+  width: 100%;
+  margin: 0px;
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
