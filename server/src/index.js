@@ -1,13 +1,17 @@
-import express from 'express';
+import mongoose from 'mongoose';
+import app from './app';
+import env from './env';
 
-const port = process.env.PORT || 5000;
-
-const app = express();
-
-app.get('/', (req, res) => {
-  res.send('Hello world');
-});
-
-app.listen(port, () => {
-  console.log(`Server is listening at port ${port}`);
-});
+mongoose
+  .connect(env.dbUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then(() => {
+    console.log('Mongo DB Connected');
+    app.listen(env.port, () => {
+      console.log(`Server is listening at port ${env.port}`);
+    });
+  })
+  .catch((err) => console.log(err));
