@@ -1,10 +1,15 @@
 import React from 'react';
-import style from './App.module.scss';
+import LandingPage from '../../Component/LandingPage/LandingPage';
+import { Route, Switch } from 'react-router-dom';
+import SignUp from '../../Component/SignUp/SignUp';
 
 const App = () => {
   return (
-    <div className={style.App}>
-      <h1>Coming soon</h1>
+    <div>
+      <Switch>
+        <Route path='/signup' component={SignUp} />
+        <Route path='/' component={LandingPage} />
+      </Switch>
     </div>
   );
 };
