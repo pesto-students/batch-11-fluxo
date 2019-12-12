@@ -1,5 +1,5 @@
-const dataToServer = async (formData) => {
-  const res = await fetch('/users/register', {
+const userInfoToServer = async (formData, url) => {
+  const res = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -8,8 +8,8 @@ const dataToServer = async (formData) => {
   });
   const resData = await res.json();
   return {
-    resData,
+    ...resData,
   };
 };
 
-export { dataToServer };
+export { userInfoToServer };

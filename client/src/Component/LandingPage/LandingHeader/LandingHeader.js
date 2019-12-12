@@ -6,6 +6,8 @@ import {
   Typography,
 } from '../../../MaterialUI/Import/Import';
 import Button from '../../../MaterialUI/Component/Button/Button';
+import { withRouter } from 'react-router-dom';
+
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
@@ -18,9 +20,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LandingHeader = () => {
+const LandingHeader = (props) => {
   const classes = useStyles();
-
+  const loginButtonHandle = () => {
+    props.history.push('/login');
+  };
   return (
     <div className={classes.root}>
       <AppBar position='static' className={classes.appHeader}>
@@ -32,6 +36,7 @@ const LandingHeader = () => {
             buttonColor='primary'
             buttonText='Login'
             variant='contained'
+            buttonClickHandle={loginButtonHandle}
           />
         </Toolbar>
       </AppBar>
@@ -39,4 +44,4 @@ const LandingHeader = () => {
   );
 };
 
-export default LandingHeader;
+export default withRouter(LandingHeader);

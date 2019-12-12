@@ -1,0 +1,20 @@
+.MainContainer {
+  max-width: 380px;
+  width: 90%;
+  margin: 4rem auto;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  p {
+    margin-top: 1rem;
+    .ModeChange {
+      color: #5a3796;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}

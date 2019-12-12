@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import TextField from '../../MaterialUI/Component/TextField/TextField';
-import Button from '../../MaterialUI/Component/Button/Button';
+import TextField from '../../../MaterialUI/Component/TextField/TextField';
+import Button from '../../../MaterialUI/Component/Button/Button';
 import style from './SignUp.module.scss';
-import { checkValidity, completeFormValidation } from './formValidation';
+import { checkValidity, completeFormValidation } from '../formValidation';
 import { formState } from './formElementConfig';
-import { dataToServer } from './dataToServer';
-import Error from '../../MaterialUI/Component/Error/Error';
+import { userInfoToServer } from '../../../apis/onBoarding/onBoarding';
+import Error from '../../../MaterialUI/Component/Error/Error';
+import constants from '../../../constants/constants';
 
 const SignUp = (props) => {
   const [submitState, changeSubmitState] = useState({
@@ -43,7 +44,8 @@ const SignUp = (props) => {
       userEmail: myFormState.userEmail.value,
       userPassword: myFormState.userPassword.value,
     };
-    const { resData } = dataToServer(formData);
+    const url = `${constants.serverURL}/users/register`;
+    const resData = userInfoToServer(formData, url);
     if (resData.error) {
       changeSubmitState({
         error: resData.error,
@@ -136,7 +138,7 @@ const SignUp = (props) => {
       </form>
       <p>
         Already hava an account?{' '}
-        <span className={style.ModeChange} modeChangeHandle={modeChangeHandle}>
+        <span className={style.ModeChange} onClick={modeChangeHandle}>
           Login here
         </span>
       </p>
