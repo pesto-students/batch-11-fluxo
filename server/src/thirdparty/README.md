@@ -48,7 +48,8 @@ Will emit a call when new integration is added by the user.
 Will emit when a trigger is happened in any of the registered app.
 
 **params**:
-1. eventObject - data of the triggered event, with the help of **integratedApps** you can get your data associated with it.
+1. eventObject - data of the triggered event, with the help of **integratedApps** you can get your data associated with it.This will initialize your thirdparty module.  This means you can listen to events emitted by thirdparty and perform action on thridparty apps.
+
 ```
 {
   eventData: {

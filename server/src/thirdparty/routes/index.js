@@ -1,6 +1,7 @@
 import express from 'express';
 import slackRouter from './slackRouter';
 import config from '../config';
+import githubRouter from './githubRouter';
 
 const baseRouter = express.Router();
 
@@ -9,6 +10,8 @@ baseRouter.get('/', (req, res) => {
 });
 
 baseRouter.use('/slack', slackRouter);
+baseRouter.use('/github', githubRouter);
+
 
 baseRouter.get('/apps', (req, res) => {
   res.send(Object.keys(config.apps));
