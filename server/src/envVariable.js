@@ -12,6 +12,9 @@ const PORT = process.env.PORT || 5000;
 const slackClientId = process.env.SLACK_CLIENT_ID;
 const slackClientSecret = process.env.SLACK_CLIENT_SECRET;
 const baseUri = process.env.BASE_URI || 'http://localhost:5000';
+const githubClientId = process.env.GITHUB_CLIENT_ID;
+const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+
 
 export {
   MONGODB_URI,
@@ -20,4 +23,6 @@ export {
   slackClientId,
   slackClientSecret,
   baseUri,
+  githubClientId,
+  githubClientSecret,
 };

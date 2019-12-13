@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import thirdPartyRouter from './thirdparty/routes';
 import logger from './logger';
 import router from './app/routes';
+import githubRouter from './thirdparty/routes/githubRouter';
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use('/', (req, res, next) => {
 app.use('/', router);
 app.use('/tp', thirdPartyRouter);
 
+app.use('/git', githubRouter);
 
 export default app;
