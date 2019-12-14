@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './Dashboard.module.scss';
 import Card from '../../MaterialUI/Component/Card/Card';
 import Header from '../Header/Header';
-import { fluxData } from './dashboardConfig';
+import { getAllFluxApi } from '../../apis/get-flux/getAllFlux';
+import { deleteFlux } from '../../apis/delete-flux/deleteFlux';
+import constants from '../../constants/constants';
+import { timeAgo } from './flux-creation-time/timeAgo';
 import DeleteFluxModal from './DeleteFluxModal/DeleteFluxModal';
 
 const Dashboard = () => {
-  const [fluxState, changeFluxState] = useState({ ...fluxData });
-
+  const [allFluxes, setAllFluxes] = useState([]);
+  const [deleteFluxId, setDeleteFluxId] = useState('');
   const [deleteModalState, changeDeleteModalState] = useState({
     modalOpen: false,
   });
 
-  const deleteModalOpen = () => {
+  useEffect(() => {
+    const allFluxes = async () => {
+      const url = `${constants.serverURL}/flux`;
+      const res = await getAllFluxApi(url);
+      if (res.status === 'failure') {
+        window.location.href = '/login';
+      }
+      setAllFluxes(res.data);
+    };
+    allFluxes();
+  }, []);
+
+  const deleteModalOpen = (id) => {
     changeDeleteModalState({
       modalOpen: true,
     });
+    setDeleteFluxId(id);
   };
 
   const deleteModalClose = () => {
@@ -33,18 +49,28 @@ const Dashboard = () => {
       modalOpen: false,
     });
   };
-
-  const cards = Object.keys(fluxState).map((i) => {
+  const yesClickHandle = async () => {
+    const url = `${constants.serverURL}/flux/${deleteFluxId}`;
+    deleteFlux(url);
+    changeDeleteModalState({
+      modalOpen: false,
+    });
+    const newAllFluxes = allFluxes.filter((flux) => flux._id !== deleteFluxId);
+    setAllFluxes(newAllFluxes);
+  };
+  const cards = allFluxes.map((flux) => {
     return (
-      <div className={style.ChildCard}>
+      <div key={flux._id} className={style.ChildCard}>
         <Card
-          key={i.fluxName}
-          deleteHandle={deleteModalOpen}
+          isEnable={flux.isEnable}
+          fluxId={flux._id}
+          key={flux._id}
+          deleteHandle={() => deleteModalOpen(flux._id)}
           editHandle={editHandle}
-          fluxName={fluxState[i].fluxName}
-          executionTime={fluxState[i].executionTime}
-          successFlux={fluxState[i].successFlux}
-          failureFlux={fluxState[i].failureFlux}
+          fluxName={flux.name}
+          eventApp={flux.eventApp}
+          createdAt={timeAgo.inWords(new Date(flux.creationDate).getTime())}
+          actionApp={flux.actionApp}
         />
       </div>
     );
@@ -55,6 +81,7 @@ const Dashboard = () => {
         handleClose={deleteModalClose}
         modalOpen={deleteModalState.modalOpen}
         noClickHandle={noClickHandle}
+        yesClickHandle={yesClickHandle}
       />
       <Header pageName='Dashboard' />
       <div className={style.MainConatiner}>{cards}</div>

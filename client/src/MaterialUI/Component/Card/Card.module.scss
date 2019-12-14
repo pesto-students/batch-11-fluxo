@@ -8,18 +8,21 @@
   &:hover {
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.22);
   }
-  .FirstBox {
-    display: flex;
-    justify-content: flex-end;
-  }
   .MidBox {
+    margin: 20px 0px 0px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    h3 {
+      margin: 5px 0px;
+    }
+    h4 {
+      margin: 5px 0px;
+    }
   }
   .LastBox {
     display: flex;
     justify-content: space-between;
-    margin: 5px;
+    margin: 10px 0px 0px 0px;
   }
 }

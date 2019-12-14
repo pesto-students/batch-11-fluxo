@@ -1,8 +1,5 @@
 const constants = {
-  serverURL:
-    process.env.REACT_APP_API_URL ||
-    'http://localhost:3000' ||
-    'https://db9ac005.ngrok.io',
+  serverURL: process.env.REACT_APP_API_URL || 'https://fluxo-dev.herokuapp.com',
 };
 
 Object.freeze(constants);

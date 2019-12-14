@@ -1,11 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import ToggleOffIcon from '@material-ui/icons/ToggleOff';
 import ToggleOnIcon from '@material-ui/icons/ToggleOn';
+import constants from '../../../constants/constants';
+import { disableFlux } from '../../../apis/disable-flux/disableFlux';
 import SnackBar from '../SnackBar/SnackBar';
 
 const Toggle = (props) => {
   const [toggleState, changeToggleState] = useState({
-    toggleOn: true,
+    toggleOn: props.isEnable,
   });
 
   const [snackBarState, changeSnackBarState] = useState({
@@ -13,7 +15,11 @@ const Toggle = (props) => {
     message: props.snackBarMessage,
   });
 
-  const toggleHandle = () => {
+  const toggleHandle = async () => {
+    const url = `${constants.serverURL}/flux/${props.fluxId}`;
+    const res = await disableFlux(url, { isEnable: !toggleState.toggleOn });
+    console.log(res);
+
     changeToggleState({
       toggleOn: !toggleState.toggleOn,
     });

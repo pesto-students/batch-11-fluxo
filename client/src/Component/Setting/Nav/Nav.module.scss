@@ -1,0 +1,26 @@
+.Nav {
+  max-width: 500px;
+  width: 95vw;
+  margin: 2rem auto;
+  ul {
+    display: flex;
+    list-style: none;
+    li {
+      margin: 1px;
+      border: 1px solid black;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .Active {
+      color: white;
+      background-color: #5a3796;
+    }
+  }
+  .Content {
+    min-height: 50vh;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+  }
+}

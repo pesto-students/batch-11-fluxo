@@ -4,12 +4,11 @@ const userInfoToServer = async (formData, url) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(formData),
   });
   const resData = await res.json();
-  return {
-    ...resData,
-  };
+  return resData;
 };
 
 export { userInfoToServer };

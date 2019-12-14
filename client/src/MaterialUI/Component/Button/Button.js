@@ -15,6 +15,7 @@ const MyButton = (props) => {
         style={props.style}
         color={props.buttonColor}
         type={props.type}
+        size={props.size}
         variant={props.variant}
         fullWidth={props.fullWidth}
         onClick={props.buttonClickHandle}

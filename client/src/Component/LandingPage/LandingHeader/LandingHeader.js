@@ -15,17 +15,29 @@ const LandingHeader = (props) => {
   const loginButtonHandle = () => {
     props.history.push('/login');
   };
+  const dashboardButtonHandle = () => {
+    props.history.push('/dashboard');
+  };
   return (
     <TopBar>
       <Typography variant='h6' className={classes.title}>
         Fluxo
       </Typography>
-      <Button
-        buttonColor='primary'
-        buttonText='Login'
-        variant='contained'
-        buttonClickHandle={loginButtonHandle}
-      />
+      {props.isAuthorized ? (
+        <Button
+          buttonColor='primary'
+          buttonText='My Dashboard'
+          variant='contained'
+          buttonClickHandle={dashboardButtonHandle}
+        />
+      ) : (
+        <Button
+          buttonColor='primary'
+          buttonText='Login'
+          variant='contained'
+          buttonClickHandle={loginButtonHandle}
+        />
+      )}
     </TopBar>
   );
 };

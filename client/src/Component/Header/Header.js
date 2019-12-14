@@ -6,6 +6,7 @@ import { makeStyles, Typography } from '../../MaterialUI/Import/Import';
 const useStyles = makeStyles(() => ({
   title: {
     flexGrow: 1,
+    cursor: 'pointer',
   },
   menu: {
     width: '24px',
@@ -16,9 +17,16 @@ const useStyles = makeStyles(() => ({
 
 const Header = (props) => {
   const classes = useStyles();
+  const homeClickHandle = () => {
+    window.location.href = '/';
+  };
   return (
     <TopBar>
-      <Typography variant='h6' className={classes.title}>
+      <Typography
+        variant='h6'
+        className={classes.title}
+        onClick={homeClickHandle}
+      >
         Fluxo
       </Typography>
       <Typography variant='h6' className={classes.title}>
