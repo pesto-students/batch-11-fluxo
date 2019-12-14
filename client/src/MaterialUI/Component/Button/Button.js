@@ -12,6 +12,7 @@ const MyButton = (props) => {
   return (
     <div className={classes.root}>
       <Button
+        style={props.style}
         color={props.buttonColor}
         type={props.type}
         variant={props.variant}

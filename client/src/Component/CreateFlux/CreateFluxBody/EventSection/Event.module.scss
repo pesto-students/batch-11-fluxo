@@ -1,0 +1,13 @@
+.Container {
+  .Event {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (min-width: 635px) {
+  .Container {
+    .Event {
+      display: initial;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.Container {
+  margin-top: 2rem;
+  .Action {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 635px) {
+  .Container {
+    .Action {
+      display: initial;
+    }
+  }
+}

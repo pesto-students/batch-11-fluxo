@@ -1,0 +1,16 @@
+.MainContainer {
+  width: 95vw;
+  margin: 1rem auto;
+  .ButtonGroup {
+    display: flex;
+    justify-content: center;
+    button {
+      margin: 2rem 0.5rem;
+    }
+  }
+}
+@media (min-width: 635px) {
+  .MainContainer {
+    width: 635px;
+  }
+}
