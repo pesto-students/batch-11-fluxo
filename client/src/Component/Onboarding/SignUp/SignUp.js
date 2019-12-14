@@ -6,11 +6,13 @@ import { checkValidity, completeFormValidation } from '../formValidation';
 import { formState } from './formElementConfig';
 import { userInfoToServer } from '../../../apis/onBoarding/onBoarding';
 import Error from '../../../MaterialUI/Component/Error/Error';
+import Spinner from '../../../MaterialUI/Component/Spinner/Spinner';
 import constants from '../../../constants/constants';
 
 const SignUp = (props) => {
   const [submitState, changeSubmitState] = useState({
     error: false,
+    loading: false,
   });
 
   const [myFormState, changeFormState] = useState(formState);
@@ -32,7 +34,7 @@ const SignUp = (props) => {
     });
   };
 
-  const formSubmitHandle = (e) => {
+  const formSubmitHandle = async (e) => {
     e.preventDefault();
     const inValidError = completeFormValidation(myFormState);
     if (inValidError) {
@@ -40,27 +42,37 @@ const SignUp = (props) => {
       return;
     }
     const formData = {
-      userName: myFormState.userName.value,
-      userEmail: myFormState.userEmail.value,
-      userPassword: myFormState.userPassword.value,
+      email: myFormState.userEmail.value,
+      name: myFormState.userName.value,
+      password: myFormState.userPassword.value,
     };
     const url = `${constants.serverURL}/users/register`;
-    const resData = userInfoToServer(formData, url);
-    if (resData.error) {
+    changeSubmitState({
+      ...submitState,
+      loading: true,
+    });
+    const resData = await userInfoToServer(formData, url);
+    console.log(resData);
+    if (resData) {
       changeSubmitState({
-        error: resData.error,
+        error: resData.status === 'failure' ? resData.data : false,
+        loading: false,
       });
     } else {
       props.history.push('/');
     }
   };
+
   const modeChangeHandle = () => {
     props.history.push('/login');
+  };
+  const homeClickHandle = () => {
+    window.location.href = '/';
   };
   return (
     <div className={style.MainContainer}>
       {submitState.error ? <Error errorText={submitState.error} /> : null}
-      <h1>Fluxo</h1>
+      <h1 onClick={homeClickHandle}>Fluxo</h1>
       <form onSubmit={formSubmitHandle}>
         <TextField
           name='userName'
@@ -128,13 +140,17 @@ const SignUp = (props) => {
               : ''
           }
         />
-        <Button
-          buttonColor='primary'
-          variant='contained'
-          buttonText='submit'
-          type='submit'
-          fullWidth={true}
-        />
+        {submitState.loading ? (
+          <Spinner />
+        ) : (
+          <Button
+            buttonColor='primary'
+            variant='contained'
+            buttonText='submit'
+            type='submit'
+            fullWidth={true}
+          />
+        )}
       </form>
       <p>
         Already hava an account?{' '}

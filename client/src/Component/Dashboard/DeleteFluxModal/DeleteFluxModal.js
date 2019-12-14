@@ -10,7 +10,12 @@ const DeleteFluxModal = (props) => {
         <h3>This flux will be deleted permanently.</h3>
         <h3>Do you want to delete?</h3>
         <div className={style.ButtonGroup}>
-          <Button buttonColor='primary' buttonText='YES' variant='contained' />
+          <Button
+            buttonColor='primary'
+            buttonText='YES'
+            variant='contained'
+            buttonClickHandle={props.yesClickHandle}
+          />
           <Button
             buttonColor='primary'
             buttonText='NO'

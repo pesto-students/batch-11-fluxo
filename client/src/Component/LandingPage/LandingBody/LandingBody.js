@@ -18,12 +18,14 @@ const LandingBody = (props) => {
           Easy way to automate for busy people. Fluxo can moves info between
           apps,<br></br>so that you can focus on important things.
         </p>
-        <Button
-          buttonText='SIGN UP'
-          buttonColor='primary'
-          variant='contained'
-          buttonClickHandle={buttonClickHandle}
-        />
+        {!props.isAuthorized ? (
+          <Button
+            buttonText='SIGN UP'
+            buttonColor='primary'
+            variant='contained'
+            buttonClickHandle={buttonClickHandle}
+          />
+        ) : null}
       </div>
       <div className={style.RightBox}>
         <img src={LandingImage} alt='about' />

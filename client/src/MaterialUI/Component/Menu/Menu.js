@@ -1,4 +1,7 @@
 import React from 'react';
+import constants from '../../../constants/constants';
+import { logout } from '../../../apis/logout/logout';
+import { connect } from 'react-redux';
 import {
   Menu,
   MenuItem,
@@ -43,7 +46,7 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-const CustomizedMenus = () => {
+const CustomizedMenus = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -52,6 +55,32 @@ const CustomizedMenus = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const clickHandle = async (e) => {
+    switch (e.target.innerText) {
+      case 'Dashboard':
+        window.location.href = '/dashboard';
+        return;
+
+      case 'Create Flux':
+        window.location.href = '/fluxing';
+        return;
+
+      case 'Setting':
+        window.location.href = '/setting';
+        return;
+
+      case 'Logout':
+        const url = `${constants.serverURL}/users/logout`;
+        const res = await logout(url);
+        props.loggingOut(res.status);
+        window.location.href = '/';
+        return;
+
+      default:
+        return;
+    }
   };
   return (
     <div>
@@ -69,25 +98,25 @@ const CustomizedMenus = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem>
+        <StyledMenuItem onClick={(e) => clickHandle(e)}>
           <ListItemIcon>
             <DashboardIcon fontSize='small' />
           </ListItemIcon>
           <ListItemText primary='Dashboard' />
         </StyledMenuItem>
-        <StyledMenuItem>
+        <StyledMenuItem onClick={(e) => clickHandle(e)}>
           <ListItemIcon>
             <AddIcon fontSize='small' />
           </ListItemIcon>
           <ListItemText primary='Create Flux' />
         </StyledMenuItem>
-        <StyledMenuItem>
+        <StyledMenuItem onClick={(e) => clickHandle(e)}>
           <ListItemIcon>
             <SettingsIcon fontSize='small' />
           </ListItemIcon>
           <ListItemText primary='Setting' />
         </StyledMenuItem>
-        <StyledMenuItem>
+        <StyledMenuItem onClick={(e) => clickHandle(e)}>
           <ListItemIcon>
             <ExitToAppIcon fontSize='small' />
           </ListItemIcon>
@@ -98,4 +127,11 @@ const CustomizedMenus = () => {
   );
 };
 
-export default CustomizedMenus;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loggingOut: (value) => {
+      dispatch({ type: 'LOGOUT_ACTION', value });
+    },
+  };
+};
+export default connect(null, mapDispatchToProps)(CustomizedMenus);

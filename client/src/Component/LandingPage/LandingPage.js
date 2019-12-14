@@ -3,11 +3,11 @@ import LandingHeader from './LandingHeader/LandingHeader';
 import LandingBody from './LandingBody/LandingBody';
 import Footer from '../Footer/Footer';
 
-const LandingPage = () => {
+const LandingPage = (props) => {
   return (
     <Fragment>
-      <LandingHeader />
-      <LandingBody />
+      <LandingHeader isAuthorized={props.isAuthorized} />
+      <LandingBody isAuthorized={props.isAuthorized} />
       <Footer />
     </Fragment>
   );
