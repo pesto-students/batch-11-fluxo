@@ -1,7 +1,7 @@
 import React from 'react';
-import TopBar from '../../../MaterialUI/Component/TopBar/TopBar';
-import Menu from '../../../MaterialUI/Component/Menu/Menu';
-import { makeStyles, Typography } from '../../../MaterialUI/Import/Import';
+import TopBar from '../../MaterialUI/Component/TopBar/TopBar';
+import Menu from '../../MaterialUI/Component/Menu/Menu';
+import { makeStyles, Typography } from '../../MaterialUI/Import/Import';
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CreateFluxHeader = () => {
+const Header = (props) => {
   const classes = useStyles();
   return (
     <TopBar>
@@ -22,11 +22,11 @@ const CreateFluxHeader = () => {
         Fluxo
       </Typography>
       <Typography variant='h6' className={classes.title}>
-        New Flux
+        {props.pageName}
       </Typography>
       <Menu />
     </TopBar>
   );
 };
 
-export default CreateFluxHeader;
+export default Header;

@@ -1,0 +1,34 @@
+.MainConatiner {
+  width: 80vw;
+  margin: 3rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  .ChildCard {
+    margin: 20px;
+  }
+}
+@media (min-width: 600px) and (max-width: 774px) {
+  .MainConatiner {
+    width: 95vw;
+    margin: 3rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .ChildCard {
+      margin: 5px;
+    }
+  }
+}
+@media (min-width: 774px) and (max-width: 1180px) {
+  .MainConatiner {
+    width: 95vw;
+    margin: 3rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .ChildCard {
+      margin: 5px;
+    }
+  }
+}

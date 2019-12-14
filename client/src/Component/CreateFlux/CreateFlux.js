@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-import CreateFluxHeader from './CreateFluxHeader/CreateFluxHeader';
 import CreateFluxBody from './CreateFluxBody/CreateFluxBody';
 import Footer from '../../Component/Footer/Footer';
+import Header from '../Header/Header';
 
 const CreateFlux = () => {
   return (
     <Fragment>
-      <CreateFluxHeader />
+      <Header pageName='Create Flux' />
       <CreateFluxBody />
       <Footer />
     </Fragment>
