@@ -1,11 +1,26 @@
 export { createMuiTheme } from '@material-ui/core/styles';
 export { ThemeProvider } from '@material-ui/styles';
-export { makeStyles } from '@material-ui/core/styles';
-export { Button } from '@material-ui/core';
+export { makeStyles, withStyles } from '@material-ui/core/styles';
 export { theme } from '../Theme/Theme';
-export { Container } from '@material-ui/core';
-export { CssBaseline } from '@material-ui/core';
-export { Typography } from '@material-ui/core';
-export { AppBar } from '@material-ui/core';
-export { Toolbar } from '@material-ui/core';
-export { TextField } from '@material-ui/core';
+export { default as MenuIcon } from '@material-ui/icons/Menu';
+export { default as DashboardIcon } from '@material-ui/icons/Dashboard';
+export { default as AddIcon } from '@material-ui/icons/Add';
+export { default as SettingsIcon } from '@material-ui/icons/Settings';
+export { default as ExitToAppIcon } from '@material-ui/icons/ExitToApp';
+export {
+  Button,
+  Container,
+  CssBaseline,
+  Typography,
+  AppBar,
+  Toolbar,
+  TextField,
+  Avatar,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Menu,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
