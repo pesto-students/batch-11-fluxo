@@ -44,6 +44,7 @@ describe('POST /users/register', () => {
     await req
       .post('/users/register')
       .send({
+        name: 'Aditya Vyas',
         email: 'vyasaditya41@live.com',
         password: 'abcd1234',
       })

@@ -1,19 +1,20 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import thirdPartyRouter from './thirdparty/routes';
-import { users } from './app/constants/packageConfig';
+import logger from './logger';
+import router from './app/routes';
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use('/', (req, res, next) => {
+  logger.info(`Path : ${req.path}`);
+  next();
+});
 
-app.use('/users', users);
-
+app.use('/', router);
 app.use('/tp', thirdPartyRouter);
 
-app.use((err, req, res) => {
-  res.send('Some error occurred');
-});
 
 export default app;
