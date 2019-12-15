@@ -1,10 +1,10 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/User';
 import generateJwt from '../constants/generateJwt';
+import logger from '../../logger';
 
 const userRegister = async (req, res) => {
   const { name, email, password } = req.body;
-
   const user = await User.findOne({ email });
 
   if (user) {
@@ -25,10 +25,11 @@ const userRegister = async (req, res) => {
 
     const token = await generateJwt(newUser._id, email);
 
-    res.cookie('token', token, { maxAge: 90000, httpOnly: true });
+    res.cookie('token', token, { maxAge: 86400000, httpOnly: true });
 
-    res.send({ error: 'Account Created!', token });
+    res.send({ message: 'Account Created!', token });
   } catch (err) {
+    logger.error(err);
     res.send({ error: 'Account cannot be created!', token: null });
   }
 };

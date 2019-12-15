@@ -3,6 +3,7 @@ import { slackClientId, slackClientSecret, baseUri } from '../../envVariable';
 import config from './config';
 import ThirdPartyApp from '../models/ThirdPartyApp';
 import tpEventEmitter, { generateActionUpdateEvent, generateAppAddedEvent, generateAppUpdatedEvent } from '../event';
+import logger from '../../logger';
 
 const getAuthUrl = (code) => `${config.api}/api/oauth.access?client_id=${slackClientId}&client_secret=${slackClientSecret}&code=${code}&redirect_uri=${encodeURIComponent(`${baseUri}/tp/slack/auth/redirect`)}`;
 
@@ -134,8 +135,10 @@ const requestToSlack = async (apiUrl, body, token) => {
 };
 
 const listenActionEvent = () => {
+  logger.info('Listening to slack action event');
   tpEventEmitter.on('action_slack', async (integrationId, actionData) => {
     try {
+      logger.info('Going to perform action on : ', actionData);
       const { inputs, endpoint } = config.action[actionData.action];
       const actionId = actionData.id;
       const token = await getToken(integrationId);
@@ -149,6 +152,7 @@ const listenActionEvent = () => {
 
       const statusJson = await requestToSlack(`${config.api}${endpoint}`, body, token);
       generateActionUpdateEvent(actionId, statusJson);
+      logger.info('Action successful');
     } catch (err) {
       generateActionUpdateEvent(actionData.id, { status: false, message: err.message });
     }

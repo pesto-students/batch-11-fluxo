@@ -15,7 +15,7 @@ const userLogin = async (req, res) => {
     if (comparePassword) {
       const token = await generateJwt(user._id, email);
 
-      res.cookie('token', token, { maxAge: 90000, httpOnly: true });
+      res.cookie('token', token, { maxAge: 86400000, httpOnly: true });
 
       res.json({ error: null, token });
     } else {

@@ -1,5 +1,6 @@
 import express from 'express';
 import slackRouter from './slackRouter';
+import config from '../config';
 
 const baseRouter = express.Router();
 
@@ -8,5 +9,9 @@ baseRouter.get('/', (req, res) => {
 });
 
 baseRouter.use('/slack', slackRouter);
+
+baseRouter.get('/apps', (req, res) => {
+  res.send(Object.keys(config.apps));
+});
 
 export default baseRouter;

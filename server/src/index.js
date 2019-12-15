@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import app from './app';
 import { MONGODB_URI, PORT } from './envVariable';
+import thirdParty from './thirdparty';
+import integrationService from './app/service/integrationService';
+import logger from './logger';
 
 mongoose
   .connect(MONGODB_URI, {
@@ -9,11 +12,15 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => {
-    console.log('Mongo DB Connected');
+    logger.info('Mongo DB Connected');
     app.listen(PORT, () => {
-      console.log(`Server is listening at port ${PORT}`);
+      logger.info(`Server is listening at port ${PORT}`);
     });
+    thirdParty.initialize();
+    integrationService.start();
   })
-  .catch((err) => console.log(err));
+  .catch((err) => logger.error(err));
+
+mongoose.set('useFindAndModify', false);
 
 export default app;

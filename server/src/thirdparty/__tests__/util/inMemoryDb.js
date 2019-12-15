@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 // May require additional time for downloading MongoDB binaries
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000;
-const opts = { useNewUrlParser: true, useUnifiedTopology: true };
+const opts = { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false };
 let mongoServer;
 
 const createConnection = async () => {
