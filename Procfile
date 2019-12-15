@@ -1,1 +1,1 @@
-web: yarn install --frozen-lockfile && cd server && yarn start
+web: yarn install --frozen-lockfile && cd server && yarn start:prod
