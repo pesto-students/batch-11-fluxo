@@ -28,7 +28,7 @@ describe('POST /users/register', () => {
       .send(data)
       .set('Accept', 'application/json')
       .expect((res) => {
-        expect(res.body.message).toBe('Account Created!');
+        expect(res.body.status).toBe('success');
       });
   });
 
@@ -42,7 +42,8 @@ describe('POST /users/register', () => {
       })
       .set('Accept', 'application/json')
       .expect((res) => {
-        expect(res.body.error).toBe('User is already registered');
+        expect(res.body.status).toBe('failure');
+        expect(res.body.data).toBe('User is already registered');
       });
   });
 
@@ -54,7 +55,7 @@ describe('POST /users/register', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .expect((res) => {
-        expect(res.body.error).toBe(null);
+        expect(res.body.status).toBe('success');
       });
   });
 
@@ -67,7 +68,8 @@ describe('POST /users/register', () => {
       })
       .set('Accept', 'application/json')
       .expect((res) => {
-        expect(res.body.error).toBe('Email Not Found, User doesn\'t Exist!');
+        expect(res.body.status).toBe('failure');
+        expect(res.body.data).toBe('Email Not Found, User doesn\'t Exist!');
       });
   });
 
@@ -80,7 +82,8 @@ describe('POST /users/register', () => {
       })
       .set('Accept', 'application/json')
       .expect((res) => {
-        expect(res.body.error).toBe('Password is incorrect, Please Try Again!');
+        expect(res.body.status).toBe('failure');
+        expect(res.body.data).toBe('Password is incorrect, Please Try Again!');
       });
   });
 
@@ -93,7 +96,7 @@ describe('POST /users/register', () => {
       })
       .set('Accept', 'application/json')
       .expect((res) => {
-        expect(res.body.error).toBe(null);
+        expect(res.body.status).toBe('success');
       });
   });
 });

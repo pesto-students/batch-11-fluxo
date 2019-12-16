@@ -2,13 +2,14 @@ import bcrypt from 'bcryptjs';
 import User from '../models/User';
 import generateJwt from '../constants/generateJwt';
 import logger from '../../logger';
+import { sendFailureMessage, sendSuccessMessage } from '../../thirdparty/utils/restUtil';
 
 const userRegister = async (req, res) => {
   const { name, email, password } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
-    res.send({ error: 'User is already registered' });
+    sendFailureMessage(res, 'User is already registered', 400);
     return;
   }
 
@@ -27,7 +28,7 @@ const userRegister = async (req, res) => {
 
     res.cookie('token', token, { maxAge: 86400000, httpOnly: true });
 
-    res.send({ message: 'Account Created!', token });
+    sendSuccessMessage(res, { token });
   } catch (err) {
     logger.error(err);
     res.send({ error: 'Account cannot be created!', token: null });

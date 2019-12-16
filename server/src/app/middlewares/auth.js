@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { JWT_KEY } from '../../envVariable';
 import logger from '../../logger';
+import { sendFailureMessage } from '../../thirdparty/utils/restUtil';
 
 const getAuthCookie = (req) => {
   if (req.headers.cookie) {
@@ -15,15 +16,16 @@ const getAuthCookie = (req) => {
 
 const ensureAuthenticated = (req, res, next) => {
   try {
+    if (req.method === 'OPTIONS') {
+      next();
+    }
     const token = getAuthCookie(req) || req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, JWT_KEY);
     req.userData = decoded;
     next();
   } catch (error) {
     logger.error(error);
-    return res.status(401).send({
-      message: 'Authorization Failed',
-    });
+    return sendFailureMessage(res, 'Authorization Failed', 401);
   }
 };
 
