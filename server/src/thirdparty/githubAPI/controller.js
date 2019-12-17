@@ -13,7 +13,7 @@ const authCallBack = async (req, res) => {
     } else {
       const authData = await service.generateAuthToken(code);
       const githubUser = await service.getGithubUser(authData);
-      const status = await service.addGithubDetailsInDB(authData, githubUser);
+      const status = await service.addGithubDetailsInDB(authData, githubUser, state);
       if (status) {
         sendSuccessMessage(res, 'Authorization success');
       } else {
@@ -26,6 +26,20 @@ const authCallBack = async (req, res) => {
   }
 };
 
+const getRepository = async (req, res) => {
+  const { userName } = req.query;
+  const repoNames = await service.getRepositoryForUser(userName);
+  sendSuccessMessage(res, repoNames);
+};
+
+const createIssue = async (req, res) => {
+  const {
+    userName, repoName, title, body,
+  } = req.body;
+
+  const status = await service.createIssueForUser(userName, repoName, title, body);
+  sendSuccessMessage(res, `Issue Create with number: ${status}`);
+};
 const getEvents = (_, res) => {
   sendSuccessMessage(res, github.events);
 };
@@ -35,7 +49,5 @@ const getActions = (_, res) => {
 };
 
 export {
-  getEvents,
-  getActions,
-  authCallBack,
+  getEvents, getActions, authCallBack, getRepository, createIssue,
 };

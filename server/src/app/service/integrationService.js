@@ -20,12 +20,11 @@ const constructActionJson = (flux, eventData) => {
   const { _id: id, actionName, actionInputs } = flux;
   const actionJson = { id, action: actionName };
 
-
   for (const key of actionInputs.keys()) {
     if (actionInputs.get(key).userProvided === true) {
       actionJson[key] = actionInputs.get(key).value;
     } else {
-      actionJson[key] = eventData[key];
+      actionJson[key] = eventData[actionInputs.get(key).value];
     }
   }
 
