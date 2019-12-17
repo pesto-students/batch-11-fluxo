@@ -26,7 +26,6 @@ const github = {
             data: false,
           },
         },
-        endpoint: 'https://api.github.com/repos/${owner}/${repo}/issues',
       },
     },
   ],
