@@ -7,21 +7,17 @@ const authCallBack = async (req, res) => {
     const { code, state } = req.query;
 
     if (code === undefined || code === '') {
-      sendFailureMessage(res, 'Code is empty', 400);
+      res.render('authStatus', { status: false });
     } else if (state === undefined || state === '') {
-      sendFailureMessage(res, 'User Token is empty', 400);
+      res.render('authStatus', { status: false });
     } else {
       const authData = await slackService.generateAuthToken(code);
       const status = await slackService.addOrUpdateIntegration(authData, state);
 
-      if (status) {
-        sendSuccessMessage(res, 'Authorization success');
-      } else {
-        sendFailureMessage(res, 'Authorization failed');
-      }
+      res.render('authStatus', { status });
     }
   } catch (err) {
-    sendFailureMessage(res, err.message);
+    res.render('authStatus', { status: false });
   }
 };
 
