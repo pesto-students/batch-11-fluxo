@@ -13,12 +13,12 @@ githubRouter.get('/', (req, res) => res.send('Hello Github'));
 
 githubRouter.get('/oauth/callback', authCallBack);
 
-githubRouter.get('/github/getrepo', getRepository);
+githubRouter.get('/getrepo', getRepository);
 
-githubRouter.post('/github/createissue', createIssue);
+githubRouter.post('/createissue', createIssue);
 
-githubRouter.get('/actions', getActions);
+githubRouter.get('/action', getActions);
 
-githubRouter.get('/events', getEvents);
+githubRouter.get('/event', getEvents);
 
 export default githubRouter;
