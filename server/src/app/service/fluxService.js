@@ -1,4 +1,5 @@
 import Flux from '../models/Flux';
+import FluxHistory from '../models/FluxHistory';
 import logger from '../../logger';
 
 /**
@@ -146,6 +147,60 @@ const getEnabledFlux = async (userId) => {
 
 const getFluxesForQuery = async (query) => Flux.find(query).exec();
 
+/**
+ *
+ * @param {String} fluxId - Object ID of flux
+ * @param {Boolean} status
+ *
+ * @returns {Boolean}
+ */
+const addFluxHistory = async (fluxId, status) => {
+  try {
+    await new FluxHistory({ fluxId, status }).save();
+  } catch (err) {
+    logger.error(err);
+    return false;
+  }
+
+  return true;
+};
+
+
+/**
+ *
+ * @param {String} fluxId
+ *
+ * @returns {Documents}
+ */
+const getFluxHistory = async (fluxId) => {
+  try {
+    const history = await FluxHistory.find({ fluxId }).select({ __v: 0 }).exec();
+    return history;
+  } catch (err) {
+    logger.error(err);
+  }
+
+  return [];
+};
+
+
+/**
+ *
+ * @param {String} fluxId
+ *
+ * @returns {Boolean}
+ */
+const deleteFluxHistory = async (fluxId) => {
+  try {
+    await FluxHistory.deleteMany({ fluxId }).exec();
+  } catch (err) {
+    logger.error(err);
+    return false;
+  }
+
+  return true;
+};
+
 export default {
   addFlux,
   getAllFlux,
@@ -156,4 +211,7 @@ export default {
   getFluxesForIntegIDs,
   getEnabledFlux,
   getFluxesForQuery,
+  addFluxHistory,
+  getFluxHistory,
+  deleteFluxHistory,
 };
