@@ -20,6 +20,15 @@ const getFluxForId = async (req, res) => {
   }
 };
 
+const getFluxHistory = async (req, res) => {
+  try {
+    const { fluxId } = req.params;
+    sendSuccessMessage(res, await service.getFluxHistory(fluxId));
+  } catch (err) {
+    sendFailureMessage(res, err.message);
+  }
+};
+
 const searchFlux = async (req, res) => {
   try {
     const { id: userId } = req.userData;
@@ -50,7 +59,7 @@ const addFlux = async (req, res) => {
 const deleteFlux = async (req, res) => {
   try {
     const { fluxId } = req.params;
-    const status = await service.deleteFlux(fluxId);
+    const status = await service.deleteFlux(fluxId) && await service.deleteFluxHistory(fluxId);
 
     if (status) {
       sendSuccessMessage(res, 'Deleted successfully');
@@ -85,4 +94,5 @@ export default {
   searchFlux,
   deleteFlux,
   updateFlux,
+  getFluxHistory,
 };
