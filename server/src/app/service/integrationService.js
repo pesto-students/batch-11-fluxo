@@ -91,11 +91,22 @@ const listenToNewEvents = () => {
   logger.info('Listening to new incoming  event');
 };
 
+const listenToActionUpdates = () => {
+  tpEvent.on('actionUpdate', (eventData) => {
+    logger.info(eventData);
+    const { id, data } = eventData;
+    fluxService.addFluxHistory(id, data.status);
+  });
+
+  logger.info('Listening to new incoming  action updated');
+};
+
 
 const start = () => {
   listenToAppAdded();
   listenToNewEvents();
   listenToAppUpdated();
+  listenToActionUpdates();
 };
 
 export default { start };

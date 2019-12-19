@@ -9,6 +9,8 @@ router.get('/search', controller.searchFlux);
 
 router.get('/:fluxId', controller.getFluxForId);
 
+router.get('/history/:fluxId', controller.getFluxHistory);
+
 router.post('/', controller.addFlux);
 
 router.delete('/:fluxId', controller.deleteFlux);
