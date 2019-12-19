@@ -5,8 +5,20 @@ const github = {
   events: {
     new_issue: {
       name: 'New Issue',
+      outputs: ['title', 'number'],
+      inputs: {
+        owner: {
+          name: 'Owner Name',
+          optional: false,
+          data: true,
+        },
+        repo: {
+          name: 'Repository Name',
+          optional: false,
+          data: true,
+        },
+      },
     },
-    data: {},
   },
   actions: {
     create_issue: {
