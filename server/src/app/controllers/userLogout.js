@@ -1,5 +1,8 @@
+import { sendSuccessMessage } from '../../thirdparty/utils/restUtil';
+
 const userLogout = (req, res) => {
-  res.send({ msg: 'You are successfully logout!' });
+  res.cookie('token', '', { maxAge: 0, httpOnly: true });
+  sendSuccessMessage(res, 'You are successfully logout!');
 };
 
 export { userLogout };

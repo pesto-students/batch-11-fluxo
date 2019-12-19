@@ -27,4 +27,15 @@ const userLogin = async (req, res) => {
   }
 };
 
-export { userLogin };
+const getUserDetail = async (req, res) => {
+  try {
+    const { userData } = req;
+    const user = await User.findOne({ _id: userData.id }).select({ name: 1, email: 1, _id: 0 });
+    sendSuccessMessage(res, user);
+  } catch (err) {
+    console.log(err);
+    sendFailureMessage(res, 'Some error occurred!');
+  }
+};
+
+export { userLogin, getUserDetail };
