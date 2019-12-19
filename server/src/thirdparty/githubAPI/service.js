@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { githubClientId, githubClientSecret } from '../../envVariable';
+import { githubClientId, githubClientSecret, baseUri } from '../../envVariable';
 import config from './config';
 import ThirdPartyApp from '../models/ThirdPartyApp';
 import tpEventEmitter, {
@@ -7,6 +7,7 @@ import tpEventEmitter, {
   generateActionUpdateEvent,
 } from '../event';
 import logger from '../../logger';
+import { createWebHook, getWebHook } from './webhook';
 
 const generateAuthToken = async (code) => {
   const options = {
@@ -44,8 +45,8 @@ const addGithubDetailsInDB = async (token, accountName, userToken) => {
     const githubApp = new ThirdPartyApp({ appName, token, accountName });
     const githubDoc = await githubApp
       .save()
-      .then(console.log('App Details Inserted'))
-      .catch((err) => console.log(err));
+      .then(logger.info('App Details Inserted'))
+      .catch((err) => logger.info(err));
     generateAppAddedEvent(githubDoc, userToken);
 
     return true;
@@ -124,8 +125,63 @@ const listenActionEvent = () => {
   });
 };
 
+const listenWebhookEvent = () => {
+  logger.info('Listening to github webhook event');
+  tpEventEmitter.on('github_webhook', async (integrationId, actionData) => {
+    try {
+      logger.info('Going to create webhook for github: ', actionData);
+      const { token } = await ThirdPartyApp.findOne({
+        _id: integrationId,
+      }).select({ token: 1, _id: 0 });
+
+      const getHook = await getWebHook(
+        token,
+        actionData.login.value,
+        actionData.name.value,
+      );
+
+      let isAvailable = false;
+      await getHook.data.forEach(async (hook) => {
+        logger.info(hook.config, baseUri, !hook.config.url.includes(baseUri));
+        if (hook.config.url.includes(baseUri)) {
+          isAvailable = true;
+        }
+      });
+
+      if (!isAvailable) {
+        await createWebHook(
+          token,
+          actionData.owner.value,
+          actionData.repo.value,
+        );
+      }
+      logger.info('Action successful');
+    } catch (err) {
+      logger.error(err);
+    }
+  });
+};
+
+const generateNewEvent = async (eventKey, repository) => {
+  const eventJson = { eventData: repository };
+  eventJson.appName = config.appName;
+  eventJson.event = eventKey;
+  ThirdPartyApp
+    .find({
+      accountName: repository.owner.login,
+    })
+    .select({ _id: 1 })
+    .exec((err, apps) => {
+      eventJson.integratedApps = apps.map((app) => app._id);
+      if (apps.length !== 0) {
+        tpEventEmitter.emit('newEvent', eventJson);
+      }
+    });
+};
+
 const initialize = () => {
   listenActionEvent();
+  listenWebhookEvent();
 };
 
 export default {
@@ -135,4 +191,5 @@ export default {
   getRepositoryForUser,
   createIssueForUser,
   initialize,
+  generateNewEvent,
 };
