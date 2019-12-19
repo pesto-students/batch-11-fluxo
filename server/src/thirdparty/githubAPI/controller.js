@@ -48,6 +48,22 @@ const getActions = (_, res) => {
   sendSuccessMessage(res, github.actions);
 };
 
+const webhookPayload = (req, res) => {
+  try {
+    const { action, repository } = req.body;
+    const responseKeys = Object.keys(req.body);
+    const eventKey = `${action}_${responseKeys[1]}`;
+    repository.login = repository.owner.login;
+    if (github.events[eventKey] !== undefined) {
+      service.generateNewEvent(eventKey, repository);
+    }
+
+    sendSuccessMessage(res, 'Event received');
+  } catch (err) {
+    sendFailureMessage(res, err.message);
+  }
+};
+
 export {
-  getEvents, getActions, authCallBack, getRepository, createIssue,
+  getEvents, getActions, authCallBack, getRepository, createIssue, webhookPayload,
 };

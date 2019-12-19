@@ -21,8 +21,8 @@ const userRegister = async (req, res) => {
 
     await newUser
       .save()
-      .then(console.log('User Created'))
-      .catch((err) => console.log(err));
+      .then(logger.info('User Created'))
+      .catch((err) => logger.info(err));
 
     const token = await generateJwt(newUser._id, email);
 

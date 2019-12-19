@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/User';
+import logger from '../../logger';
 import generateJwt from '../constants/generateJwt';
 import { sendFailureMessage, sendSuccessMessage } from '../../thirdparty/utils/restUtil';
 
@@ -22,7 +23,7 @@ const userLogin = async (req, res) => {
       sendFailureMessage(res, 'Password is incorrect, Please Try Again!', 400);
     }
   } catch (err) {
-    console.log(err);
+    logger.info(err);
     sendFailureMessage(res, 'Some error occurred!');
   }
 };
@@ -33,7 +34,7 @@ const getUserDetail = async (req, res) => {
     const user = await User.findOne({ _id: userData.id }).select({ name: 1, email: 1, _id: 0 });
     sendSuccessMessage(res, user);
   } catch (err) {
-    console.log(err);
+    logger.info(err);
     sendFailureMessage(res, 'Some error occurred!');
   }
 };

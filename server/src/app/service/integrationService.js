@@ -45,6 +45,7 @@ const isValidEvent = (flux, eventData) => {
 
 const processEvent = async (event) => {
   const fluxes = await getEventFluxes(event);
+  logger.info(`Available flux count ${fluxes.length}`);
   for (const flux of fluxes) {
     const { actionApp, actionAppId } = flux;
     if (isValidEvent(flux, event.eventData)) {

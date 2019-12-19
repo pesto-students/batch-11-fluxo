@@ -5,6 +5,7 @@ import {
   getEvents,
   getActions,
   createIssue,
+  webhookPayload,
 } from '../githubAPI/controller';
 
 const githubRouter = new express.Router();
@@ -14,6 +15,8 @@ githubRouter.get('/', (req, res) => res.send('Hello Github'));
 githubRouter.get('/oauth/callback', authCallBack);
 
 githubRouter.get('/getrepo', getRepository);
+
+githubRouter.post('/gitwebhook', webhookPayload);
 
 githubRouter.post('/createissue', createIssue);
 

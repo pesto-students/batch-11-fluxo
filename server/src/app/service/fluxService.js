@@ -1,6 +1,7 @@
 import Flux from '../models/Flux';
 import FluxHistory from '../models/FluxHistory';
 import logger from '../../logger';
+import tpEventEmitter from '../../thirdparty/event';
 
 /**
  *
@@ -22,6 +23,9 @@ import logger from '../../logger';
  */
 const addFlux = async (fluxJson) => {
   try {
+    if (fluxJson.eventApp === 'github') {
+      tpEventEmitter.emit('github_webhook', fluxJson.eventAppId, fluxJson.eventInputs);
+    }
     await new Flux(fluxJson).save();
   } catch (err) {
     logger.error(err);
