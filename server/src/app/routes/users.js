@@ -16,7 +16,7 @@ router.get('/detail', ensureAuthenticated, getUserDetail);
 
 router.get('/logout', userLogout);
 
-router.get('/auth', (req, res) => {
+router.get('/auth', ensureAuthenticated, (req, res) => {
   sendSuccessMessage(res, 'Auth success');
 });
 
