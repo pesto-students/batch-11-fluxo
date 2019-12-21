@@ -22,7 +22,21 @@ describe('POST /users/register', () => {
     password: 'abcd1234',
   };
 
-  test('respond with error to be false', async () => {
+  test('respond with status to be success', async () => {
+    await req
+      .post('/users/register')
+      .send({
+        name: 'Yash Pandit',
+        email: 'yash@pesto.tech',
+        password: 'abcd1234',
+      })
+      .set('Accept', 'application/json')
+      .expect((res) => {
+        expect(res.body.status).toBe('success');
+      });
+  });
+
+  test('should respond with success for new email address', async () => {
     await req
       .post('/users/register')
       .send(data)
