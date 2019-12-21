@@ -1,0 +1,47 @@
+.HeadContainer {
+  margin: 3rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: #5a3796;
+}
+
+.TableContainer {
+  width: 50vw;
+  margin: 3rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+
+@media (min-width: 600px) and (max-width: 774px) {
+  .TableContainer {
+    width: 95vw;
+    margin: 3rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+  }
+}
+
+@media (min-width: 774px) and (max-width: 1180px) {
+  .TableContainer {
+    width: 95vw;
+    margin: 3rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 599px) {
+  .TableContainer {
+    width: 95vw;
+    margin: 3rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

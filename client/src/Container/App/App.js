@@ -9,6 +9,7 @@ import { auth } from '../../apis/auth/auth';
 import { connect } from 'react-redux';
 import Spinner from '../../MaterialUI/Component/Spinner/Spinner';
 import Dashboard from '../../Component/Dashboard/Dashboard';
+import History from '../../Component/History/History';
 
 const App = () => {
   const [authState, changeAuthState] = useState(false);
@@ -29,6 +30,7 @@ const App = () => {
     <Switch>
       <Route path='/setting' exact component={Setting} />
       <Route path='/dashboard' exact component={Dashboard} />
+      <Route exact path='/history/:fluxId' component={History} />
       <Route path='/fluxing' exact component={CreateFlux} />
       <Route path='/login' component={Login} />
       <Route path='/signup' component={SignUp} />
