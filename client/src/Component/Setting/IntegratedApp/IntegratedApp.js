@@ -14,17 +14,21 @@ const IntApp = (props) => {
   });
   return (
     <div className={style.Main}>
-      <table>
-        <thead>
-          <tr>
-            <td>Serial</td>
-            <td>Account</td>
-            <td>App Name</td>
-            <td>Token</td>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
+      {props.intAppsInfo.length === 0 ? (
+        <h4>No app is integrated with your account.</h4>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <td>Serial</td>
+              <td>Account</td>
+              <td>App Name</td>
+              <td>Token</td>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+      )}
     </div>
   );
 };

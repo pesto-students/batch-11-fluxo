@@ -4,6 +4,7 @@ const initialState = {
     actionInputs: {},
     eventInputs: {},
   },
+  pausingFlux: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -65,6 +66,17 @@ const reducer = (state = initialState, action) => {
     case 'LOGOUT_ACTION':
       return {
         logout: true,
+      };
+
+    case 'FLUX_PAUSING':
+      return {
+        ...state,
+        createFluxInfo: {
+          ...state.createFluxInfo,
+          ...state.createFluxInfo.eventInputs,
+          ...state.createFluxInfo.actionInputs,
+        },
+        pausingFlux: action.value,
       };
     default:
       return state;

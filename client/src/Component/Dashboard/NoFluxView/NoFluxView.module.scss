@@ -1,0 +1,32 @@
+.NoFlux {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  max-width: 500px;
+  img {
+    width: 100px;
+    height: 100px;
+  }
+  .Inner {
+    padding: 20px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 698px) {
+  .NoFlux {
+    display: flex;
+    width: 95vw;
+    flex-direction: column;
+    justify-content: center;
+    img {
+      width: 100px;
+      height: 100px;
+    }
+    .Inner {
+      padding: 20px;
+    }
+  }
+}

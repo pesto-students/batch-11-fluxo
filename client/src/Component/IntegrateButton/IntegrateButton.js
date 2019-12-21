@@ -1,16 +1,12 @@
 import React from 'react';
-import Button from '../../MaterialUI/Component/Button/Button';
+import { MenuItem } from '../../MaterialUI/Import/Import';
 import appApi from '../../apis/apps';
 
 const IntegrateButton = (props) => {
-
-
   const openUrlInPopup = (url, name, statusCallback) => {
-    window.open(url, `Integrate ${name}`, 'width=0,height=0');
+    window.open(url, `Integrate ${name}`, 'width=500,height=500');
     let prevCount = null;
     let polledCount = 0;
-
-    
 
     const pollData = () => {
       setTimeout(async () => {
@@ -28,17 +24,20 @@ const IntegrateButton = (props) => {
         }
         polledCount += 1;
       }, 3000);
-    }
+    };
 
     pollData();
-  }
+  };
   return (
-    <Button 
-      buttonText={props.name}
-      buttonColor='primary'
-      variant='contained'
-      buttonClickHandle={() => {openUrlInPopup(props.url, props.name, props.onStatusChange)}}
-    />
+    <MenuItem
+      key='accountAuth'
+      value='I am the new account'
+      onClick={() => {
+        openUrlInPopup(props.url, props.appName, props.onStatusChange);
+      }}
+    >
+      {props.appName}
+    </MenuItem>
   );
 };
 

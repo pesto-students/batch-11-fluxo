@@ -23,21 +23,14 @@ const LandingHeader = (props) => {
       <Typography variant='h6' className={classes.title}>
         Fluxo
       </Typography>
-      {props.isAuthorized ? (
-        <Button
-          buttonColor='primary'
-          buttonText='My Dashboard'
-          variant='contained'
-          buttonClickHandle={dashboardButtonHandle}
-        />
-      ) : (
-        <Button
-          buttonColor='primary'
-          buttonText='Login'
-          variant='contained'
-          buttonClickHandle={loginButtonHandle}
-        />
-      )}
+      <Button
+        buttonColor='primary'
+        buttonText={props.isAuthorized ? 'Dashboard' : 'Login'}
+        variant='contained'
+        buttonClickHandle={
+          props.isAuthorized ? dashboardButtonHandle : loginButtonHandle
+        }
+      />
     </TopBar>
   );
 };

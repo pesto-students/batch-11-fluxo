@@ -7,37 +7,46 @@ import CreateFlux from '../../Component/CreateFlux/CreateFlux';
 import Setting from '../../Component/Setting/Setting';
 import { auth } from '../../apis/auth/auth';
 import { connect } from 'react-redux';
+import Spinner from '../../MaterialUI/Component/Spinner/Spinner';
 import Dashboard from '../../Component/Dashboard/Dashboard';
 
-const App = ({ isLoggedOut }) => {
+const App = () => {
   const [authState, changeAuthState] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const authing = async () => {
+      setLoading(true);
       const value = await auth();
-      changeAuthState(!isLoggedOut);
+      if (value) {
+        setLoading(false);
+      }
+      changeAuthState(value.isAuthorized);
     };
     authing();
-  }, [isLoggedOut]);
-  return (
-    <div>
-      <Switch>
-        <Route exact path='/setting' component={Setting} />
-        <Route exact path='/dashboard' component={Dashboard} />
-        <Route exact path='/fluxing' component={CreateFlux} />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/signup' component={SignUp} />
-        <Route
-          exact
-          path='/'
-          render={() => <LandingPage isAuthorized={authState} />}
-        />
-      </Switch>
-    </div>
+  }, []);
+
+  let routes = (
+    <Switch>
+      <Route path='/setting' exact component={Setting} />
+      <Route path='/dashboard' exact component={Dashboard} />
+      <Route path='/fluxing' exact component={CreateFlux} />
+      <Route path='/login' component={Login} />
+      <Route path='/signup' component={SignUp} />
+      <Route
+        path='/'
+        exact
+        render={() => <LandingPage isAuthorized={authState} />}
+      />
+    </Switch>
   );
+
+  return <div>{loading ? <Spinner /> : routes}</div>;
 };
+
 const mapStateToProps = (state) => {
   return {
     isLoggedOut: state.logout,
   };
 };
+
 export default connect(mapStateToProps, null)(App);

@@ -12,12 +12,13 @@ import constants from '../../../constants/constants';
 const Login = (props) => {
   const [submitState, changeSubmitState] = useState({
     error: false,
-    loading: false,
   });
+  const [loading, setLoading] = useState(false);
 
   const [myFormState, changeFormState] = useState(formState);
 
   const inputHandle = (e) => {
+    changeSubmitState({ error: false });
     const element = e.target.name;
     const updateFormState = { ...myFormState };
     const findElement = updateFormState[element];
@@ -47,8 +48,12 @@ const Login = (props) => {
     };
 
     const url = `${constants.serverURL}/users/login`;
+    setLoading(true);
     const resData = await userInfoToServer(formData, url);
     console.log(resData);
+    if (resData) {
+      setLoading(false);
+    }
     if (resData.status === 'failure') {
       changeSubmitState({
         error: resData.status === 'failure' ? resData.data : false,
@@ -64,59 +69,65 @@ const Login = (props) => {
     window.location.href = '/';
   };
   return (
-    <div className={style.MainContainer}>
-      {submitState.error ? <Error errorText={submitState.error} /> : null}
-      <h1 onClick={homeClickHandle}>Fluxo</h1>
-      <form onSubmit={formSubmitHandle}>
-        <TextField
-          name='userEmail'
-          label='Email'
-          variant='outlined'
-          type='email'
-          color='primary'
-          inputHandle={inputHandle}
-          error={
-            !myFormState.userEmail.isValid && myFormState.userEmail.touched
-          }
-          helperText={
-            !myFormState.userEmail.isValid && myFormState.userEmail.touched
-              ? 'Email is invalid'
-              : ''
-          }
-        />
-        <TextField
-          name='userPassword'
-          label='Password'
-          variant='outlined'
-          type='password'
-          color='primary'
-          inputHandle={inputHandle}
-          error={
-            !myFormState.userPassword.isValid &&
-            myFormState.userPassword.touched
-          }
-          helperText={
-            !myFormState.userPassword.isValid &&
-            myFormState.userPassword.touched
-              ? 'Password should be atleast 4 characters long'
-              : ''
-          }
-        />
-        <Button
-          buttonColor='primary'
-          variant='contained'
-          buttonText='submit'
-          type='submit'
-          fullWidth={true}
-        />
-      </form>
-      <p>
-        Do not hava an account?{' '}
-        <span className={style.ModeChange} onClick={modeChangeHandle}>
-          Sign up here
-        </span>
-      </p>
-    </div>
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className={style.MainContainer}>
+          {submitState.error ? <Error errorText={submitState.error} /> : null}
+          <h1 onClick={homeClickHandle}>Fluxo</h1>
+          <form onSubmit={formSubmitHandle}>
+            <TextField
+              name='userEmail'
+              label='Email'
+              variant='outlined'
+              type='email'
+              color='primary'
+              inputHandle={inputHandle}
+              error={
+                !myFormState.userEmail.isValid && myFormState.userEmail.touched
+              }
+              helperText={
+                !myFormState.userEmail.isValid && myFormState.userEmail.touched
+                  ? 'Email is invalid'
+                  : ''
+              }
+            />
+            <TextField
+              name='userPassword'
+              label='Password'
+              variant='outlined'
+              type='password'
+              color='primary'
+              inputHandle={inputHandle}
+              error={
+                !myFormState.userPassword.isValid &&
+                myFormState.userPassword.touched
+              }
+              helperText={
+                !myFormState.userPassword.isValid &&
+                myFormState.userPassword.touched
+                  ? 'Password should be atleast 4 characters long'
+                  : ''
+              }
+            />
+            <Button
+              buttonColor='primary'
+              variant='contained'
+              buttonText='submit'
+              type='submit'
+              fullWidth={true}
+            />
+          </form>
+          <p>
+            Do not hava an account?{' '}
+            <span className={style.ModeChange} onClick={modeChangeHandle}>
+              Sign up here
+            </span>
+          </p>
+        </div>
+      )}
+    </>
   );
 };
 
