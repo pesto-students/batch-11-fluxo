@@ -47,6 +47,10 @@ const Dashboard = () => {
     });
   };
 
+  const historyHandle = (id) => {
+    window.location.href = `/history/${id}`
+  }
+
   const noClickHandle = () => {
     changeDeleteModalState({
       modalOpen: false,
@@ -73,6 +77,7 @@ const Dashboard = () => {
           fluxId={flux._id}
           key={flux._id}
           deleteHandle={() => deleteModalOpen(flux._id)}
+          historyHandle={() => historyHandle(flux._id)}
           fluxName={flux.name}
           eventApp={flux.eventApp}
           createdAt={timeAgo.inWords(new Date(flux.creationDate).getTime())}

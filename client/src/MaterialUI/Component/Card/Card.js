@@ -6,7 +6,7 @@ import Toggle from '../Toggle/Toggle';
 const Card = (props) => {
   return (
     <div className={style.Card}>
-      <div className={style.MidBox}>
+      <div className={style.MidBox} onClick={props.historyHandle}>
         <h3 style={{ color: '#5a3796' }}>{props.fluxName} </h3>
         <h4 style={{ color: '#851e3e' }}>
           {props.eventApp} > {props.actionApp}
