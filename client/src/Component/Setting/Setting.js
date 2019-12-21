@@ -4,17 +4,19 @@ import { availableApps } from '../../apis/availableApps/availableApps';
 import constants from '../../constants/constants';
 import Header from '../Header/Header';
 import Nav from './Nav/Nav';
+import Spinner from '../../MaterialUI/Component/Spinner/Spinner';
 import Footer from '../Footer/Footer';
 
 const Setting = () => {
   const [userInfo, setUserInfo] = useState({});
   const [intAppsInfo, setIntAppsInfo] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const userDetailsUrl = `${constants.serverURL}/users/detail`;
     const getUserDetails = async () => {
+      setLoading(true);
       const api = await userDetails(userDetailsUrl);
-      console.log(api.status);
       if (api.httpStatus === 401) {
         window.location.href = '/login';
       }
@@ -24,6 +26,9 @@ const Setting = () => {
     const intAppUrl = `${constants.serverURL}/apps`;
     const getIntAppDetails = async () => {
       const api = await availableApps(intAppUrl);
+      if (api) {
+        setLoading(false);
+      }
       if (api.httpStatus === 401) {
         window.location.href = '/login';
       }
@@ -34,7 +39,12 @@ const Setting = () => {
   return (
     <div>
       <Header pageName='Setting' />
-      <Nav userInfo={userInfo} intAppsInfo={intAppsInfo} />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Nav userInfo={userInfo} intAppsInfo={intAppsInfo} />
+      )}
+
       <Footer />
     </div>
   );

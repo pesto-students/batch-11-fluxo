@@ -1,4 +1,5 @@
 import React from 'react';
+import IntegrateButton from '../../../Component/IntegrateButton/IntegrateButton';
 import {
   makeStyles,
   InputLabel,
@@ -21,7 +22,11 @@ const SimpleSelect = (props) => {
   const itemList = props.itemList;
   const menuList = itemList.map((i) => {
     return (
-      <MenuItem key={i.value} value={i.value}>
+      <MenuItem
+        key={i.value}
+        value={i.value}
+        onStatusChange={props.onStatusChange}
+      >
         {i.displayValue}
       </MenuItem>
     );
@@ -34,7 +39,12 @@ const SimpleSelect = (props) => {
   }, []);
 
   return (
-    <FormControl variant='outlined' className={classes.formControl}>
+    <FormControl
+      variant='outlined'
+      className={classes.formControl}
+      required={true}
+      disabled={props.disabled}
+    >
       <InputLabel ref={inputLabel} id='demo-simple-select-outlined-label'>
         {props.labelText}
       </InputLabel>
@@ -46,6 +56,13 @@ const SimpleSelect = (props) => {
         labelWidth={labelWidth}
       >
         {menuList}
+        {props.showAddAccount ? (
+          <IntegrateButton
+            appName={props.appName}
+            url={props.url}
+            onStatusChange={props.onStatusChange}
+          />
+        ) : null}
       </Select>
     </FormControl>
   );

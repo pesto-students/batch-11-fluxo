@@ -6,9 +6,12 @@ import { getAllFluxApi } from '../../apis/get-flux/getAllFlux';
 import { deleteFlux } from '../../apis/delete-flux/deleteFlux';
 import constants from '../../constants/constants';
 import { timeAgo } from './flux-creation-time/timeAgo';
+import Spinner from '../../MaterialUI/Component/Spinner/Spinner';
+import NoFluxView from './NoFluxView/NoFluxView';
 import DeleteFluxModal from './DeleteFluxModal/DeleteFluxModal';
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(false);
   const [allFluxes, setAllFluxes] = useState([]);
   const [deleteFluxId, setDeleteFluxId] = useState('');
   const [deleteModalState, changeDeleteModalState] = useState({
@@ -17,8 +20,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     const allFluxes = async () => {
+      setLoading(true);
       const url = `${constants.serverURL}/flux`;
       const res = await getAllFluxApi(url);
+      if (res) {
+        setLoading(false);
+      }
       if (res.status === 'failure') {
         window.location.href = '/login';
       }
@@ -40,18 +47,18 @@ const Dashboard = () => {
     });
   };
 
-  const editHandle = () => {
-    console.log('I am edit');
-  };
-
   const noClickHandle = () => {
     changeDeleteModalState({
       modalOpen: false,
     });
   };
   const yesClickHandle = async () => {
+    setLoading(true);
     const url = `${constants.serverURL}/flux/${deleteFluxId}`;
-    deleteFlux(url);
+    const res = deleteFlux(url);
+    if (res) {
+      setLoading(false);
+    }
     changeDeleteModalState({
       modalOpen: false,
     });
@@ -66,7 +73,6 @@ const Dashboard = () => {
           fluxId={flux._id}
           key={flux._id}
           deleteHandle={() => deleteModalOpen(flux._id)}
-          editHandle={editHandle}
           fluxName={flux.name}
           eventApp={flux.eventApp}
           createdAt={timeAgo.inWords(new Date(flux.creationDate).getTime())}
@@ -75,6 +81,7 @@ const Dashboard = () => {
       </div>
     );
   });
+
   return (
     <div>
       <DeleteFluxModal
@@ -84,7 +91,13 @@ const Dashboard = () => {
         yesClickHandle={yesClickHandle}
       />
       <Header pageName='Dashboard' />
-      <div className={style.MainConatiner}>{cards}</div>
+      {loading ? (
+        <Spinner />
+      ) : allFluxes.length === 0 ? (
+        <NoFluxView />
+      ) : (
+        <div className={style.MainConatiner}>{cards}</div>
+      )}
     </div>
   );
 };

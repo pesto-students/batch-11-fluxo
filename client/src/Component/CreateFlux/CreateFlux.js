@@ -13,6 +13,7 @@ const CreateFlux = () => {
     };
     authenticate();
   }, []);
+
   return (
     <Fragment>
       <Header pageName='Create Flux' />
