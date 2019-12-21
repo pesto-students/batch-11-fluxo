@@ -59,14 +59,9 @@ describe('Slack service', () => {
     user_id: '1234',
     team_id: '4321',
   };
-  let integId = null;
-  const integCallBack = (arg) => {
-    integId = arg._id;
-  };
 
-  const newAppAddedFn = jest.fn(integCallBack);
-  const appUpdatedFn = jest.fn(integCallBack);
-  tpEvent.on('appUpdated', appUpdatedFn);
+
+  const newAppAddedFn = jest.fn();
   tpEvent.on('appAdded', newAppAddedFn);
 
   test('It should add integration', async () => {
@@ -77,17 +72,13 @@ describe('Slack service', () => {
 
   test('It should update integration', async () => {
     expect(await slackService.addOrUpdateIntegration(authData, 'user123')).toBe(true);
-    expect(await slackService.getToken(integId)).toBe('abcd12345');
   });
 
   test('App added and updated event is triggered', async () => {
     expect(newAppAddedFn).toBeCalled();
-    expect(appUpdatedFn).toBeCalled();
 
-    expect(newAppAddedFn.mock.calls.length).toBe(1);
-    expect(appUpdatedFn.mock.calls.length).toBe(1);
+    expect(newAppAddedFn.mock.calls.length).toBe(2);
 
     expect(newAppAddedFn).toBeCalledWith(expect.anything(), 'user123');
-    expect(appUpdatedFn).toBeCalledWith(expect.anything(), 'user123');
   });
 });
