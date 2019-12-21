@@ -2,7 +2,7 @@ import axios from 'axios';
 import { slackClientId, slackClientSecret, baseUri } from '../../envVariable';
 import config from './config';
 import ThirdPartyApp from '../models/ThirdPartyApp';
-import tpEventEmitter, { generateActionUpdateEvent, generateAppAddedEvent, generateAppUpdatedEvent } from '../event';
+import tpEventEmitter, { generateActionUpdateEvent, generateAppAddedEvent } from '../event';
 import logger from '../../logger';
 
 const getAuthUrl = (code) => `${config.api}/api/oauth.access?client_id=${slackClientId}&client_secret=${slackClientSecret}&code=${code}&redirect_uri=${encodeURIComponent(`${baseUri}/tp/slack/auth/redirect`)}`;
@@ -56,16 +56,8 @@ const generateNewEvent = async (teamId, authedUsers, event) => {
 
 const addToDBandGenerateEvent = async (integId, userToken, appConfig) => {
   try {
-    let resultDoc;
-
-    if (integId !== null) {
-      resultDoc = await ThirdPartyApp.findOneAndUpdate({ _id: integId }, appConfig).exec();
-      generateAppUpdatedEvent(resultDoc, userToken);
-    } else {
-      resultDoc = await new ThirdPartyApp(appConfig).save();
-      generateAppAddedEvent(resultDoc, userToken);
-    }
-
+    const resultDoc = await new ThirdPartyApp(appConfig).save();
+    generateAppAddedEvent(resultDoc, userToken);
     return true;
   } catch (err) {
     return false;
