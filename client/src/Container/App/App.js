@@ -28,7 +28,7 @@ const App = () => {
 
   let routes = (
     <Switch>
-      <Route path='/setting' exact component={Setting} />
+      <Route path='/settings' exact component={Setting} />
       <Route path='/dashboard' exact component={Dashboard} />
       <Route exact path='/history/:fluxId' component={History} />
       <Route path='/fluxing' exact component={CreateFlux} />
