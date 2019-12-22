@@ -14,15 +14,10 @@ const authCallBack = async (req, res) => {
       const authData = await service.generateAuthToken(code);
       const githubUser = await service.getGithubUser(authData);
       const status = await service.addGithubDetailsInDB(authData, githubUser, state);
-      if (status) {
-        sendSuccessMessage(res, 'Authorization success');
-      } else {
-        sendFailureMessage(res, 'Authorization failed');
-      }
+      res.render('authStatus', { status });
     }
   } catch (err) {
-    logger.error(err);
-    sendFailureMessage(res, err.message);
+    res.render('authStatus', { status: false });
   }
 };
 
