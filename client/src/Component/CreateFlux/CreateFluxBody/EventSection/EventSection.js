@@ -52,6 +52,9 @@ const EventSection = (props) => {
   };
   const handleChangeTriggers = (e) => {
     changeTriggerValue(e.target.value);
+    changeTriggerValue(e.target.value);
+    changeUserEventInputs({});
+    changeAccountValue('');
     setSelectable({
       ...selectable,
       accounts: true,
@@ -202,7 +205,8 @@ const EventSection = (props) => {
             onStatusChange={authAppButtonHandle}
           />
           {Object.keys(userEventInputs).map((i) => {
-            return thirdPartyData[i] !== undefined ? (
+            return thirdPartyData[i] !== undefined &&
+              userEventInputs[i] !== undefined ? (
               <SimpleSelect
                 labelText={userEventInputs[i].name}
                 itemList={thirdPartyData[i].map((j) => {
@@ -217,7 +221,8 @@ const EventSection = (props) => {
             ) : null;
           })}
           {Object.keys(userEventInputs).map((i) => {
-            return staticData[i] !== undefined
+            return staticData[i] !== undefined &&
+              userEventInputs[i] !== undefined
               ? Object.keys(staticData).map((i) => {
                   return (
                     <TextField

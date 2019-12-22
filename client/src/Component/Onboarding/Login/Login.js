@@ -50,7 +50,6 @@ const Login = (props) => {
     const url = `${constants.serverURL}/users/login`;
     setLoading(true);
     const resData = await userInfoToServer(formData, url);
-    console.log(resData);
     if (resData) {
       setLoading(false);
     }

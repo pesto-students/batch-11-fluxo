@@ -49,8 +49,10 @@ const ActionSection = (props) => {
     }
     changeAccounts(accounts.data);
   };
-  const handleChangeTriggers = (e) => {
+  const handleChangeTriggers = async (e) => {
     changeTriggerValue(e.target.value);
+    changeUserEventInputs({});
+    changeAccountValue('');
     setSelectable({
       ...selectable,
       accounts: true,
@@ -200,7 +202,8 @@ const ActionSection = (props) => {
             onStatusChange={authAppButtonHandle}
           />
           {Object.keys(thirdPartyData).map((i) => {
-            return thirdPartyData[i] !== undefined ? (
+            return thirdPartyData[i] !== undefined &&
+              userEventInputs[i] !== undefined ? (
               <SimpleSelect
                 labelText={userEventInputs[i].name}
                 itemList={thirdPartyData[i].map((j) => {
@@ -216,7 +219,8 @@ const ActionSection = (props) => {
           })}
 
           {Object.keys(staticData).map((i) => {
-            return staticData[i] !== undefined ? (
+            return staticData[i] !== undefined &&
+              userEventInputs[i] !== undefined ? (
               <TextField
                 variant='outlined'
                 label={staticData[i]}
