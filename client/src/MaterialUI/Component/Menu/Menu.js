@@ -67,8 +67,8 @@ const CustomizedMenus = (props) => {
         window.location.href = '/fluxing';
         return;
 
-      case 'Setting':
-        window.location.href = '/setting';
+      case 'Settings':
+        window.location.href = '/settings';
         return;
 
       case 'Logout':
@@ -114,7 +114,7 @@ const CustomizedMenus = (props) => {
           <ListItemIcon>
             <SettingsIcon fontSize='small' />
           </ListItemIcon>
-          <ListItemText primary='Setting' />
+          <ListItemText primary='Settings' />
         </StyledMenuItem>
         <StyledMenuItem onClick={(e) => clickHandle(e)}>
           <ListItemIcon>

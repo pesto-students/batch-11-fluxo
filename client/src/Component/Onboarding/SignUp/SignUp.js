@@ -159,7 +159,7 @@ const SignUp = (props) => {
             />
           </form>
           <p>
-            Already hava an account?{' '}
+            Already have an account?{' '}
             <span className={style.ModeChange} onClick={modeChangeHandle}>
               Login here
             </span>

@@ -120,7 +120,7 @@ const Login = (props) => {
             />
           </form>
           <p>
-            Do not hava an account?{' '}
+            Don't have an account?{' '}
             <span className={style.ModeChange} onClick={modeChangeHandle}>
               Sign up here
             </span>
