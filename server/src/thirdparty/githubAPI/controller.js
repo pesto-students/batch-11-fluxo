@@ -1,7 +1,6 @@
 import github from './config';
 import { sendSuccessMessage, sendFailureMessage } from '../utils/restUtil';
 import service from './service';
-import logger from '../../logger';
 
 const authCallBack = async (req, res) => {
   try {
@@ -59,6 +58,26 @@ const webhookPayload = (req, res) => {
   }
 };
 
+const getAccountData = async (req, res) => {
+  try {
+    const { integId, event, input } = req.params;
+
+    if (integId === undefined || integId === '') {
+      sendFailureMessage(res, 'IntegId is empty', 400);
+    } else if (event === undefined || event === '') {
+      sendFailureMessage(res, 'Event is empty', 400);
+    } else if (input === undefined || input === '') {
+      sendFailureMessage(res, 'Input is empty', 400);
+    }
+
+    const { data } = await service.getAccountData(integId, event, input);
+
+    sendSuccessMessage(res, data);
+  } catch (err) {
+    sendFailureMessage(res, err.message);
+  }
+};
+
 export {
-  getEvents, getActions, authCallBack, getRepository, createIssue, webhookPayload,
+  getEvents, getActions, authCallBack, getRepository, createIssue, webhookPayload, getAccountData,
 };

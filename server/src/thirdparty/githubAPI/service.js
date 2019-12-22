@@ -179,6 +179,33 @@ const generateNewEvent = async (eventKey, repository) => {
     });
 };
 
+const getToken = async (integrationId) => {
+  const { token } = await ThirdPartyApp
+    .findOne({
+      _id: integrationId,
+    })
+    .select({ token: 1, _id: 0 })
+    .exec();
+
+  return token;
+};
+
+const getAccountData = async (integId, event, input) => {
+  const token = await getToken(integId);
+  let eventData = config.event[event];
+
+  if (eventData === undefined) {
+    eventData = config.action[event];
+  }
+  const { endpoint } = eventData.inputs[input];
+
+  if (token !== undefined && token !== null && endpoint !== undefined) {
+    return listenActionEvent();
+  }
+
+  return Promise.reject(new Error('Invalid inputs'));
+};
+
 const initialize = () => {
   listenActionEvent();
   listenWebhookEvent();
@@ -192,4 +219,5 @@ export default {
   createIssueForUser,
   initialize,
   generateNewEvent,
+  getAccountData,
 };
