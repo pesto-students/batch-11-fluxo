@@ -25,7 +25,28 @@ const github = {
       name: 'Star Repository',
       outputs: [],
       inputs: {
-        repo: {
+        login: {
+          name: 'Owner Name',
+          optional: false,
+          data: true,
+        },
+        name: {
+          name: 'Repository Name',
+          optional: false,
+          data: true,
+        },
+      },
+    },
+    opened_pull_request: {
+      name: 'New Pull Request',
+      outputs: [],
+      inputs: {
+        login: {
+          name: 'Owner Name',
+          optional: false,
+          data: true,
+        },
+        name: {
           name: 'Repository Name',
           optional: false,
           data: true,
