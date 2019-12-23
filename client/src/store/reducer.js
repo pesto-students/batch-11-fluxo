@@ -24,39 +24,36 @@ const reducer = (state = initialState, action) => {
         ...state,
         createFluxInfo: {
           ...state.createFluxInfo,
-          ...state.createFluxInfo.actionInputs,
-          ...state.createFluxInfo.eventInputs,
           ...action.value,
         },
       };
 
     case 'ACTION_INFO':
+        console.log(action.value, state.createFluxInfo);
       return {
         ...state,
         createFluxInfo: {
           ...state.createFluxInfo,
-          ...state.createFluxInfo.actionInputs,
-          ...state.createFluxInfo.eventInputs,
           ...action.value,
         },
       };
     case 'EVENT_INPUTS':
+      console.log(action.value, state.createFluxInfo);
       return {
         ...state,
         createFluxInfo: {
           ...state.createFluxInfo,
-          ...state.createFluxInfo.actionInputs,
           eventInputs: {
             ...action.value,
           },
         },
       };
     case 'ACTION_INPUTS':
+        console.log(action.value, state.createFluxInfo);
       return {
         ...state,
         createFluxInfo: {
           ...state.createFluxInfo,
-          ...state.createFluxInfo.eventInputs,
           actionInputs: {
             ...action.value,
           },
@@ -73,8 +70,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         createFluxInfo: {
           ...state.createFluxInfo,
-          ...state.createFluxInfo.eventInputs,
-          ...state.createFluxInfo.actionInputs,
         },
         pausingFlux: action.value,
       };

@@ -12,12 +12,12 @@ const github = {
         login: {
           name: 'Owner Name',
           optional: false,
-          data: true,
+          data: false,
         },
         name: {
           name: 'Repository Name',
           optional: false,
-          data: true,
+          data: false,
         },
       },
     },
@@ -28,12 +28,12 @@ const github = {
         login: {
           name: 'Owner Name',
           optional: false,
-          data: true,
+          data: false,
         },
         name: {
           name: 'Repository Name',
           optional: false,
-          data: true,
+          data: false,
         },
       },
     },
@@ -44,12 +44,12 @@ const github = {
         login: {
           name: 'Owner Name',
           optional: false,
-          data: true,
+          data: false,
         },
         name: {
           name: 'Repository Name',
           optional: false,
-          data: true,
+          data: false,
         },
       },
     },
@@ -58,10 +58,15 @@ const github = {
     create_issue: {
       name: 'Create New Issue',
       inputs: {
+        fullRepo: {
+          name: 'Repository name (owner/name)',
+          optional: false,
+          data: false,
+        },
         title: {
           name: 'Title of Issue',
           optional: false,
-          data: true,
+          data: false,
         },
         body: {
           name: 'Message body',

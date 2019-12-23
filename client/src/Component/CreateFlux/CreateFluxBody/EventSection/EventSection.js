@@ -79,6 +79,8 @@ const EventSection = (props) => {
     const field = triggerEventsList[event].inputs;
     changeUserEventInputs(field);
     const list = Object.keys(field);
+    
+    const tempStaticData = {};
     list.forEach(async (i) => {
       if (field[i].data) {
         const url = `${constants.serverURL}/tp/${appName}/data/${tpAppId}/${event}/${i}`;
@@ -91,11 +93,10 @@ const EventSection = (props) => {
           [i]: res.data.channels,
         });
       } else {
-        setStaticData({
-          [i]: field[i].name,
-        });
+        tempStaticData[i] = field[i].name;
       }
     });
+    setStaticData(tempStaticData);
   };
   const handleChangeWithDynamic = (e) => {
     setWithValueDynamic(e.target.value);
@@ -110,16 +111,14 @@ const EventSection = (props) => {
       ...eventInputs,
     });
   };
-  const handleChangeWithStatic = (e) => {
-    const eventInputs = {};
-    Object.keys(userEventInputs).forEach((i) => {
-      if (!userEventInputs[i].data) {
-        eventInputs[i] = { value: e.target.value, userProvided: false };
-      }
-    });
+  const handleChangeWithStatic = (e, name) => {
+    let eventInputs = props.createFluxInfo.eventInputs;
+    if (eventInputs === undefined) {
+      eventInputs = {};
+    }
+    eventInputs[name] = { value: e.target.value, userProvided: true }
     props.fluxEventInputs({
       ...props.createFluxInfo.eventInputs,
-      ...eventInputs,
     });
   };
   const authAppButtonHandle = async () => {
@@ -203,8 +202,8 @@ const EventSection = (props) => {
             }
             url={`${constants.serverURL}/integrate/${availableAppsValue}`}
             onStatusChange={authAppButtonHandle}
-          />
-          {Object.keys(userEventInputs).map((i) => {
+            />
+          {Object.keys(thirdPartyData).map((i) => {
             return thirdPartyData[i] !== undefined &&
               userEventInputs[i] !== undefined ? (
               <SimpleSelect
@@ -220,21 +219,17 @@ const EventSection = (props) => {
               />
             ) : null;
           })}
-          {Object.keys(userEventInputs).map((i) => {
+          {Object.keys(staticData).map((i) => {
             return staticData[i] !== undefined &&
-              userEventInputs[i] !== undefined
-              ? Object.keys(staticData).map((i) => {
-                  return (
-                    <TextField
-                      variant='outlined'
-                      label={staticData[i]}
-                      color='primary'
-                      name={staticData[i].name}
-                      inputHandle={handleChangeWithStatic}
-                    />
-                  );
-                })
-              : null;
+              userEventInputs[i] !== undefined ? (
+              <TextField
+                variant='outlined'
+                label={staticData[i]}
+                color='primary'
+                name={staticData[i].name}
+                inputHandle={(e) => handleChangeWithStatic(e, i)}
+              />
+            ) : null;
           })}
         </div>
       )}
