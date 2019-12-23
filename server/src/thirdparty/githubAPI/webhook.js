@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from './config';
 import logger from '../../logger';
-import baseUri from '../../envVariable';
+import { baseUri } from '../../envVariable';
 
 const createWebHook = async (token, owner, repo) => {
   const url = config.webhook_url.replace('/repos/:owner/:repo/hooks', `/repos/${owner}/${repo}/hooks`);

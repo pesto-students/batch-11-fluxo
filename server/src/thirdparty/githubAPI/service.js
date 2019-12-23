@@ -92,10 +92,10 @@ const createIssueForUser = async (token, fullRepo, title, body) => {
         body,
       },
     };
-    const result = await axios(options);
-    return result.data.number;
+    await axios(options);
+    return { status: true };
   } catch (err) {
-    return err;
+    return { status: false };
   }
 };
 
@@ -116,11 +116,9 @@ const listenActionEvent = () => {
       );
       logger.info(statusJson);
       logger.info('Action successful');
+      generateActionUpdateEvent(actionData.id, statusJson);
     } catch (err) {
-      generateActionUpdateEvent(actionData.id, {
-        status: false,
-        message: err.message,
-      });
+      generateActionUpdateEvent(actionData.id, { status: false, message: err.message });
     }
   });
 };
@@ -151,8 +149,8 @@ const listenWebhookEvent = () => {
       if (!isAvailable) {
         await createWebHook(
           token,
-          actionData.owner.value,
-          actionData.repo.value,
+          actionData.login.value,
+          actionData.name.value,
         );
       }
       logger.info('Action successful');

@@ -75,13 +75,12 @@ const ActionSection = (props) => {
       ...actionInputs,
     });
   };
-  const handleChangeWithStatic = (e) => {
-    const actionInputs = {};
-    Object.keys(userEventInputs).forEach((i) => {
-      if (!userEventInputs[i].data) {
-        actionInputs[i] = { value: e.target.value, userProvided: true };
-      }
-    });
+  const handleChangeWithStatic = (e, name) => {
+    let actionInputs = props.createFluxInfo.actionInputs;
+    if (actionInputs === undefined) {
+      actionInputs = {};
+    }
+    actionInputs[name] = { value: e.target.value, userProvided: true }
     props.fluxActionInputs({
       ...props.createFluxInfo.actionInputs,
       ...actionInputs,
@@ -217,7 +216,6 @@ const ActionSection = (props) => {
               />
             ) : null;
           })}
-
           {Object.keys(staticData).map((i) => {
             return staticData[i] !== undefined &&
               userEventInputs[i] !== undefined ? (
@@ -226,7 +224,7 @@ const ActionSection = (props) => {
                 label={staticData[i]}
                 color='primary'
                 name={staticData[i].name}
-                inputHandle={handleChangeWithStatic}
+                inputHandle={(e) => handleChangeWithStatic(e, i)}
               />
             ) : null;
           })}
